@@ -13,3 +13,34 @@
  *= require_tree .
  *= require_self
  */
+ 
+ /* 共通ヘッダー */
+ header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ヘッダーロゴ */
+.header-logo{
+  font-size: 40px;
+}
+
+/* ヘッダー右側のメニュー */
+.header-side-menu a{
+  text-decoration: none;
+  color: black;
+}
+
+/* チーム登録画面 */
+.team-main{
+}
+
+.team-main-title{
+  text-align: center;
+}
+
+.team-name-field, .team-new-btn{
+  display: block;
+  margin: 0 auto;
+}

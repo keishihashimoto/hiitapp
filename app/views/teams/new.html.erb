@@ -1,0 +1,9 @@
+<main class="team-main">
+  <div class="team-main-title">
+    チーム登録画面です
+  </div>
+  <%= form_with model: @team do |f| %>
+    <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"team-name-field" %>
+    <%= f.submit "チームを登録する", class:"team-new-btn" %>
+  <% end %>
+</main>
