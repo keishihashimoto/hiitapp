@@ -33,8 +33,6 @@
 }
 
 /* チーム登録画面 */
-.team-main{
-}
 
 .error-messages-container, .team-main-title{
   text-align: center;
@@ -43,4 +41,26 @@
 .team-name-field, .team-new-btn{
   display: block;
   margin: 0 auto;
+}
+
+/* チーム詳細画面 */
+.team-show{
+  display: flex;
+}
+
+.team-name-container{
+  justify-content: space-around;
+}
+
+.team-name-container a{
+  text-decoration: none;
+  color: black;
+}
+
+/* チーム編集画面 */
+.team-main a{
+  text-decoration: none;
+  color: black;
+  display: block;
+  text-align: center;
 }
