@@ -5,6 +5,14 @@
   <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
 </div>
 <div class="team-show team-member-container">
+  <div class="title">
+    <div>選手・グループ名一覧</div>
+    <div>
+      <% if current_user.admin? %>
+      <%= link_to "新しいグループを作成する", "#" %>
+      <% end %>
+    </div>
+  </div>
   <% if user_signed_in? && current_user.admin? %>
     <% @team.users.each do |user| %>
       <div class="each-member-container">

@@ -14,6 +14,12 @@
  *= require_self
  */
  
+/* リンクの下線と色を無効化 */
+a{
+  text-decoration: none;
+  color: black;
+}
+
  /* 共通ヘッダー */
  header{
   display: flex;
@@ -67,9 +73,9 @@
   justify-content: space-around;
 }
 
-.team-name-container a{
-  text-decoration: none;
-  color: black;
+.title{
+  display: flex;
+  justify-content: space-around;
 }
 
 .each-member-container{
@@ -77,15 +83,8 @@
   justify-content: space-around;
 }
 
-.each-member-container a{
-  text-decoration: none;
-  color: black;
-}
-
 /* チーム編集画面 */
 .team-main a{
-  text-decoration: none;
-  color: black;
   display: block;
   text-align: center;
 }
