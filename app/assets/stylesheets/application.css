@@ -73,7 +73,13 @@ a{
   justify-content: space-around;
 }
 
+.team-menu-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .title{
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
@@ -81,6 +87,15 @@ a{
 .each-member-container{
   display: flex;
   justify-content: space-around;
+}
+
+.each-menu-container{
+  width: 40%;
+}
+
+.each-menu-container a{
+  display: block;
+  text-align: center;
 }
 
 /* チーム編集画面 */

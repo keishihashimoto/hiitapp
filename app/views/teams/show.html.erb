@@ -47,12 +47,12 @@
     </div>
   </div>
   <% @team.menus.each do |menu| %>
-    <div class="each-member-container">
+    <div class="each-menu-container">
       <%= link_to "#" do %>
         <% if menu.icon.attached? %>
-          <div><%= image_tag menu.icon.variant(resize: "100x100") %></div>
+          <%= image_tag menu.icon.variant(resize: "100x100"), class:"menu-icon" %>
         <% end %>
-        <div><%= link_to menu.name %></div>
+        <%= link_to menu.name, class:"menu-name" %>
       <% end %>
     </div>
   <% end %>
