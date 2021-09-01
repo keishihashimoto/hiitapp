@@ -29,6 +29,7 @@
   <div class="field">
     <%= f.label :team, "チーム名を選択してください" %><br />
     <select name="user[team_id]">
+      <option>---</option>
       <% Team.all.each do |team| %>
         <option value="<%= team.id.to_i %>"><%= team.name %></option>
       <% end %>
@@ -36,11 +37,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :admin, "指導者の方か選手の方かを選択してください" %><br />
-    <select name="user[admin]">
-      <option value=true>指導者の方</option>
-      <option value=false>選手の方</option>
-    </select>
+    <%= f.label :admin, "指導者の方はチェックを入れてください" %><br />
+    <%= f.check_box :admin, :as => :boolean %>
   </div>
 
   <div class="actions">

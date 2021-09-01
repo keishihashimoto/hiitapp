@@ -18,7 +18,7 @@
         <%= link_to current_user.name, user_path(current_user) %>
       </div>
       <div class="logout">
-        <%= link_to "ログアウト", destroy_user_session_path %>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       </div>
     </div>
     <div class="group">

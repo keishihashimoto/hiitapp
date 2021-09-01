@@ -2,7 +2,9 @@ class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update]
   
   def index
-    @team = current_user.team
+    if user_signed_in?
+      @team = current_user.team
+    end
   end
 
   def new
