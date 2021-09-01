@@ -61,15 +61,23 @@
 }
 
 /* チーム詳細画面 */
-.team-show{
-  display: flex;
-}
 
 .team-name-container{
+  display: flex;
   justify-content: space-around;
 }
 
 .team-name-container a{
+  text-decoration: none;
+  color: black;
+}
+
+.each-member-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.each-member-container a{
   text-decoration: none;
   color: black;
 }

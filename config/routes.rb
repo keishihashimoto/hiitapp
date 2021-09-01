@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   get root to: "teams#index"
   resources :teams, except: :destroy
   resources :user, only: [:show]
+  get "teams/users/:id", to: "users#index"
 end

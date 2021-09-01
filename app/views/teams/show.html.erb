@@ -4,6 +4,29 @@
   </div>
   <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
 </div>
-<div class="team-show team-member-container">チームメンバーとグループを表示するボックス</div>
+<div class="team-show team-member-container">
+  <% if user_signed_in? && current_user.admin? %>
+    <% @team.users.each do |user| %>
+      <div class="each-member-container">
+        <div><%= link_to user.name, "users/#{user.id}" %></div>
+        <div>所属しているグループを表示</div>
+      </div>
+    <% end %>
+  <% elsif user_signed_in? && !(current_user.admin?) %>
+    <% @team.users.each do |user| %>
+      <% if current_user.id == user.id %>
+        <div class="each-member-container">
+          <div><%= link_to user.name, root_path %></div>
+          <div>所属しているグループを表示</div>
+        </div>
+      <% else %>
+        <div class="each-member-container">
+          <div><%= user.name %></div>
+          <div>所属しているグループを表示</div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
 <div class="team-show team-hiit-container">HIITを表示するボックス</div>
 <div class="team-show team-menu-container">メニューを表示するボックス</div>
