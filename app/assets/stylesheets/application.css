@@ -32,6 +32,14 @@
   color: black;
 }
 
+.team-user-container{
+  display: flex;
+}
+
+.group{
+  text-align: center;
+}
+
 /* チーム登録画面 */
 
 .error-messages-container, .team-main-title{
