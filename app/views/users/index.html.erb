@@ -6,3 +6,7 @@
     </div>
   <% end %>
 </div>
+<% if current_user.admin? %>
+<div><%= link_to "#{@user.name}を削除する", user_path(@user), method: :delete %></div>
+<div><%= link_to "チームのページに戻る", team_path(@team) %></div>
+<% end %>
