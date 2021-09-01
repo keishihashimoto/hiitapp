@@ -8,7 +8,7 @@
   <% if user_signed_in? && current_user.admin? %>
     <% @team.users.each do |user| %>
       <div class="each-member-container">
-        <div><%= link_to user.name, "#" %></div>
+        <div><%= link_to user.name, "users/#{user.id}" %></div>
         <div>所属しているグループを表示</div>
       </div>
     <% end %>
@@ -16,7 +16,7 @@
     <% @team.users.each do |user| %>
       <% if current_user.id == user.id %>
         <div class="each-member-container">
-          <div><%= link_to user.name, "#" %></div>
+          <div><%= link_to user.name, root_path %></div>
           <div>所属しているグループを表示</div>
         </div>
       <% else %>
