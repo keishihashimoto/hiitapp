@@ -88,3 +88,12 @@ a{
   display: block;
   text-align: center;
 }
+
+/* メニュー作成画面 */
+.menu-detail div{
+  text-align: center;
+}
+
+.menu-detail label{
+  display: block;
+}

@@ -1,5 +1,5 @@
 class Menu < ApplicationRecord
-  validates :name, precense: true
+  validates :name, presence: true
   belongs_to :team
   has_one_attached :icon
 end
