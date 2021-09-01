@@ -6,6 +6,7 @@ class User < ApplicationRecord
   with_options presence: true do
     validates :name
     validates :admin
+    validates :team
   end
   belongs_to :team
 end

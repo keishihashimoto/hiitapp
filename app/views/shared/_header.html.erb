@@ -3,12 +3,26 @@
 </div>
 <div class="header-side-menu">
   <!--ユーザーがログインしているかどうかで表示内容を変更-->
+  <% unless user_signed_in? %>
   <!--ログインしていない場合-->
-  <%= link_to "チームを登録する", new_team_path %>
-  <%= link_to "ユーザーを登録する","#" %>
-  <%= link_to "ログインする","#" %>
+    <%= link_to "チームを登録する", new_team_path %>
+    <%= link_to "ユーザーを登録する", new_user_registration_path %>
+    <%= link_to "ログインする", new_user_session_path %>
   <!--ログインしている場合の表示-->
-  <!--チーム名-->
-  <!--ユーザー名表示部分-->
-  <!--グループ名表示部分-->
+  <% else %>
+    <div class="team-user-container">
+      <div class="team">
+        <%= link_to @team.name, team_path(@team) %>
+      </div>
+      <div class="user">
+        <%= link_to current_user.name, user_path(current_user) %>
+      </div>
+      <div class="logout">
+        <%= link_to "ログアウト", destroy_user_session_path %>
+      </div>
+    </div>
+    <div class="group">
+      グループ名
+    </div>
+  <% end %>
 </div>
