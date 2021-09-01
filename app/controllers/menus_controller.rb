@@ -7,7 +7,9 @@ class MenusController < ApplicationController
   
   def create
     @menu = Menu.new(menu_params)
-    binding.pry
+    unless @menu.icon.attached?
+      @menu.icon.attach(io: File.open(Rails.root.join("app/assets/images/no_image.jpeg")), filename: "no_image.jpeg")
+    end
     if @menu.save
       redirect_to team_path(current_user.team)
     else
