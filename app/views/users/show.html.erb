@@ -1,0 +1,8 @@
+<div>お名前：<%= current_user.name %></div>
+<div>チーム名：<%= current_user.team.name %></div>
+<div>グループ名：</div>
+<div>本日の予定：</div>
+<div>
+  <%= link_to "ユーザー情報を編集する", edit_user_registration_path %>
+  <%= link_to "ホーム画面へ戻る", root_path %>
+</div>
