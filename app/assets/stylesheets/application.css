@@ -40,6 +40,15 @@
   text-align: center;
 }
 
+/* ユーザートップ */
+.weekly-menu-container{
+  display: flex;
+}
+
+.daily-menu-container{
+  border: 3px solid black;
+}
+
 /* チーム登録画面 */
 
 .error-messages-container, .team-main-title{

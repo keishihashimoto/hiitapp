@@ -1,2 +1,9 @@
-<!--メイン部分を表示-->
-<h1>メイン部分です</h1>
+<% if user_signed_in? %>
+  <div class="weekly-menu-container">
+    <% 7.times do %>
+      <div class="daily-menu-container">
+        1日分のトレーニングメニュー
+      </div>
+    <% end %>
+  </div>
+<% end %>
