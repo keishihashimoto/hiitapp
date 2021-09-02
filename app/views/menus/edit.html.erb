@@ -21,6 +21,9 @@
       <%= f.submit "メニューを編集する" %>
     </div>
     <div>
+      <%= link_to "メニューを削除する", menu_path(@menu), method: :delete %>
+    </div>
+    <div>
       <%= link_to "メニューのページに戻る", menu_path(@menu) %>
       <%= link_to "新しいメニューを作成する", new_menu_path %>
     </div>

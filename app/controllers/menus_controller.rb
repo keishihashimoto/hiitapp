@@ -1,6 +1,6 @@
 class MenusController < ApplicationController
-  before_action :admin_user?, only: [:new, :create, :edit, :update]
-  before_action :set_menu, only: [:show, :edit, :update]
+  before_action :admin_user?, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_menu, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show]
   def new
     @menu = Menu.new
@@ -30,6 +30,11 @@ class MenusController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @menu.destroy
+    redirect_to team_path(current_user.team)
   end
 
   private
