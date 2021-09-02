@@ -1,14 +1,18 @@
 <div class="team-show team-name-container">
   <div class="team-name">
-    <%= @team.name %>
+    <%= link_to @team.name, team_path(@team) %>
   </div>
-  <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
+  <div>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
+  <% end %>
+  </div>
 </div>
 <div class="team-show team-member-container">
   <div class="title">
     <div>選手・グループ名一覧</div>
     <div>
-      <% if current_user.admin? %>
+      <% if user_signed_in? && current_user.admin? %>
       <%= link_to "新しいグループを作成する", "#" %>
       <% end %>
     </div>
@@ -37,4 +41,23 @@
   <% end %>
 </div>
 <div class="team-show team-hiit-container">HIITを表示するボックス</div>
-<div class="team-show team-menu-container">メニューを表示するボックス</div>
+<div class="team-show team-menu-container">
+  <div class="title">
+    <div>登録されているメニュー一覧</div>
+    <div>
+      <% if current_user.admin? %>
+      <%= link_to "新しいメニューを登録する", new_menu_path %>
+      <% end %>
+    </div>
+  </div>
+  <% @team.menus.each do |menu| %>
+    <div class="each-menu-container">
+      <%= link_to menu_path(menu) do %>
+        <% if menu.icon.attached? %>
+          <%= image_tag menu.icon.variant(resize: "100x100"), class:"menu-icon" %>
+        <% end %>
+        <%= link_to menu.name, class:"menu-name" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

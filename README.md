@@ -58,7 +58,7 @@ Things you may want to cover:
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | name               | string     | null: false                    |
-| text               | text       | null: false                    |
+| text               | text       |
 | team               | references | null: false, foreign_key: true |
 
 ### Associations

@@ -1,0 +1,25 @@
+<main class="menu-show-main">
+  <div class="menu-name-container">
+    <%= @menu.name %>
+  </div>
+  <div class="menu-icon-container">
+    <%= image_tag @menu.icon %>
+  </div>
+  <div class="menu-text-container">
+    <%= @menu.text %>
+  </div>
+  <div class="related-hiit-container">
+    関連するHIITを一覧表示
+  </div>
+  <div class="link-container">
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "メニューを編集する", edit_menu_path(@menu) %>
+      <%= link_to "メニューを削除する", menu_path(@menu), method: :delete %>
+      <%= link_to "メニューを作成する", new_menu_path %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+    <% elsif user_signed_in? %>
+      <%= link_to "自分のページに戻る", root_path %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+    <% end %>
+  </div>
+</main>
