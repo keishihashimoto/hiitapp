@@ -18,7 +18,7 @@
       <%= link_to "メニューを作成する", new_menu_path %>
       <%= link_to "チームのページに戻る", team_path(@menu.team) %>
     <% elsif user_signed_in? %>
-      <%= link_to "トップページに戻る", root_path %>
+      <%= link_to "自分のページに戻る", root_path %>
       <%= link_to "チームのページに戻る", team_path(@menu.team) %>
     <% end %>
   </div>

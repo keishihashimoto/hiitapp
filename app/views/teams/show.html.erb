@@ -2,13 +2,17 @@
   <div class="team-name">
     <%= link_to @team.name, team_path(@team) %>
   </div>
-  <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
+  <div>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
+  <% end %>
+  </div>
 </div>
 <div class="team-show team-member-container">
   <div class="title">
     <div>選手・グループ名一覧</div>
     <div>
-      <% if current_user.admin? %>
+      <% if user_signed_in? && current_user.admin? %>
       <%= link_to "新しいグループを作成する", "#" %>
       <% end %>
     </div>
