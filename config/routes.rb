@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :teams, except: :destroy
   resources :users, only: [:show, :destroy]
   get "teams/users/:id", to: "users#index"
-  resources :menus, only: [:new, :create]
+  resources :menus, only: [:new, :create, :show]
 end

@@ -112,3 +112,10 @@ a{
 .menu-detail label{
   display: block;
 }
+
+/* メニュー詳細 */
+.menu-show-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
