@@ -1,5 +1,5 @@
-<div>お名前：<%= current_user.name %></div>
-<div>チーム名：<%= current_user.team.name %></div>
+<div>お名前：<%= link_to current_user.name, user_path(current_user) %></div>
+<div>チーム名：<%= link_to current_user.team.name, team_path(current_user.team)  %></div>
 <div>グループ名：</div>
 <div>本日の予定：</div>
 <div>

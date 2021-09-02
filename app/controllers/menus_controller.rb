@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
-  before_action :admin_user?, only: [:new, :create]
-  before_action :set_menu, only: [:show]
+  before_action :admin_user?, only: [:new, :create, :edit, :update]
+  before_action :set_menu, only: [:show, :edit, :update]
+  before_action :authenticate_user!, except: [:show]
   def new
     @menu = Menu.new
   end
@@ -18,6 +19,17 @@ class MenusController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @menu.update(menu_params)
+      redirect_to menu_path(@menu)
+    else
+      render :edit
+    end
   end
 
   private

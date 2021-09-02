@@ -13,7 +13,7 @@
   </div>
   <div class="link-container">
     <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "メニューを編集する", "#" %>
+      <%= link_to "メニューを編集する", edit_menu_path(@menu) %>
       <%= link_to "メニューを削除する", "#" %>
       <%= link_to "メニューを作成する", new_menu_path %>
       <%= link_to "チームのページに戻る", team_path(@menu.team) %>

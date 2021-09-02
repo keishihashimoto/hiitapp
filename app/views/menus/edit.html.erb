@@ -1,5 +1,5 @@
-<%= render "shared/error_messages", model: @menu %>
 <div class="menu-detail">
+  <%= render "shared/error_messages", model: @menu %>
   <%= form_with model: @menu, local: true do |f| %>
   <div>
     <%= f.label "メニューの名前",:name %>
@@ -10,14 +10,20 @@
     <%= f.file_field :icon %>
   </div>
   <div id="preview-container">
+    <%= image_tag @menu.icon %>
   </div>
   <div>
     <%= f.label "メニューの説明文",:text %>
     <%= f.text_area :text %>
   </div>
   <div>
-    <%= f.submit "メニューを登録する" %>
-    <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+    <div>
+      <%= f.submit "メニューを編集する" %>
+    </div>
+    <div>
+      <%= link_to "メニューのページに戻る", menu_path(@menu) %>
+      <%= link_to "新しいメニューを作成する", new_menu_path %>
+    </div>
   </div>
   <% end %>
 </div>

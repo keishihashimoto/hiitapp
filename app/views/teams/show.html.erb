@@ -1,6 +1,6 @@
 <div class="team-show team-name-container">
   <div class="team-name">
-    <%= @team.name %>
+    <%= link_to @team.name, team_path(@team) %>
   </div>
   <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
 </div>
