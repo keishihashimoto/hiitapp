@@ -51,9 +51,7 @@
   </div>
   <% @team.hiits.each do |hiit| %>
     <div class="each-menu-container">
-      <%= link_to "#" do %>
-        <%= link_to hiit.name, class:"menu-name" %>
-      <% end %>
+        <%= link_to hiit.name, hiit_path(hiit), class:"menu-name" %>
     </div>
   <% end %>
 </div>

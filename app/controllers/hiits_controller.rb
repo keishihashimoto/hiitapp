@@ -16,6 +16,11 @@ class HiitsController < ApplicationController
     end
   end
 
+  def show
+    @hiit = Hiit.find(params[:id])
+    @menus = set_menus_of_hiit
+  end
+
   private
   def hiit_params
     params.require(:hiit_menu_hiit).permit(:name, :active_time, :rest_time, menu_ids: [], date: []).merge(team_id: current_user.team.id)
@@ -23,6 +28,14 @@ class HiitsController < ApplicationController
 
   def set_team
     @team = current_user.team
+  end
+
+  def set_menus_of_hiit
+    @menus = []
+    @hiit.menu_hiits.each do |menu_hiit|
+      @menus << menu_hiit.menu
+    end
+    return @menus
   end
 
 end

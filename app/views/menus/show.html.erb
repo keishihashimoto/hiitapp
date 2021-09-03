@@ -9,7 +9,12 @@
     <%= @menu.text %>
   </div>
   <div class="related-hiit-container">
-    関連するHIITを一覧表示
+    <div>このメニューが含まれているHIIT</div>
+    <div>
+      <% @hiits.each do |hiit| %>
+        <div><%= hiit.name %></div>
+      <% end %>
+    </div>
   </div>
   <div class="link-container">
     <% if user_signed_in? && current_user.admin? %>

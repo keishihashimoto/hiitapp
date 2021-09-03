@@ -1,0 +1,30 @@
+<main>
+  <div><%= "#{@hiit.name}の詳細ページです" %></div>
+  <div>
+    <%= "1セットあたりの時間：#{@hiit.active_time}" %>
+    <%= "セット間の休憩時間：#{@hiit.rest_time}" %>
+  </div>
+  <div>
+    <div>このHIITで行う種目</div>
+    <% @menus.each do |menu|%>
+      <div>
+      <%= link_to menu_path(menu) do %>
+        <%= image_tag menu.icon.variant(resize: "50x50") %>
+        <%= menu.name %>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div>このHIITを登録しているグループ</div>
+  <div class="link-container">
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>
+      <%= link_to "HIITを削除する", hiit_path(@hiit), method: :delete %>
+      <%= link_to "HIITを作成する", new_hiit_path %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+    <% elsif user_signed_in? %>
+      <%= link_to "自分のページに戻る", root_path %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+    <% end %>
+  </div>
+</main>
