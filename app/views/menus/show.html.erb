@@ -12,7 +12,7 @@
     <div>このメニューが含まれているHIIT</div>
     <div>
       <% @hiits.each do |hiit| %>
-        <div><%= hiit.name %></div>
+        <div><%= link_to hiit.name, hiit_path(hiit) %></div>
       <% end %>
     </div>
   </div>

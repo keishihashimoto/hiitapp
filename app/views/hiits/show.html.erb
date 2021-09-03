@@ -5,12 +5,21 @@
     <%= "セット間の休憩時間：#{@hiit.rest_time}" %>
   </div>
   <div>
+    <div>このHIITを行う曜日</div>
+    <% 7.times do |i| %>
+      <% if @wday_list.include?(i) %>
+        <div><%= Wday.find(i).name %></div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
     <div>このHIITで行う種目</div>
-    <% @menus.each do |menu|%>
+    <% @menus.length.times do |i|%>
       <div>
-      <%= link_to menu_path(menu) do %>
-        <%= image_tag menu.icon.variant(resize: "50x50") %>
-        <%= menu.name %>
+        <%= "#{(i + 1)}種目目" %>
+      <%= link_to menu_path(@menus[i]) do %>
+        <%= image_tag @menus[i].icon.variant(resize: "50x50") %>
+        <%= @menus[i].name %>
       <% end %>
       </div>
     <% end %>
@@ -21,10 +30,10 @@
       <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>
       <%= link_to "HIITを削除する", hiit_path(@hiit), method: :delete %>
       <%= link_to "HIITを作成する", new_hiit_path %>
-      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
     <% elsif user_signed_in? %>
       <%= link_to "自分のページに戻る", root_path %>
-      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
     <% end %>
   </div>
 </main>

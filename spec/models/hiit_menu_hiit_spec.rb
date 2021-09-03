@@ -202,6 +202,11 @@ RSpec.describe HiitMenuHiit, type: :model do
         @hiit_menu_hiit.valid?
         expect(@hiit_menu_hiit.errors.full_messages).to include("Menu ids must be choosen at eight-times")
       end
+      it "menu_idsの中に'---'が含まれていると保存ができない" do
+        @hiit_menu_hiit.menu_ids[7] = "0"
+        @hiit_menu_hiit.valid?
+        expect(@hiit_menu_hiit.errors.full_messages).to include("Menu ids must be choosen at eight-times")
+      end
       it "種目が９つ以上選択されると保存ができない" do
         @hiit_menu_hiit.menu_ids << @menu.id
         @hiit_menu_hiit.valid?
