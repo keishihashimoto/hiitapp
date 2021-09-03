@@ -64,15 +64,18 @@ Things you may want to cover:
 ### Associations
 
 - belongs_to :team
+- has_many :menu_hiits
+- has_many :hiits, through: :menu_hiits
 
 ## hiits テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | name               | string     | null: false                    |
-| active_time        | text       | null: false                    |
-| rest_time          | text       | null: false                    |
-| date               | datetime   | null: false                    |
+| active_time        | string     | null: false                    |
+| rest_time          | string     | null: false                    |
+| date               | integer    | null: false                    |
+| menus          | references | null: false, foreign_key: true | 
 | team               | references | null: false, foreign_key: true |
 
 ### Associations
@@ -80,6 +83,9 @@ Things you may want to cover:
 - belongs_to :team
 - has_many :groups
 - has_many :user_hiits
+- has_many :menu_hiits
+- has_many :menus, through: :menu_hiits
+- has_many :hiit_dates
 
 ## groups テーブル
 
@@ -119,4 +125,28 @@ Things you may want to cover:
 ### Associations
 
 - belongs_to :user
+- belongs_to :hiit
+
+## menu_hiitsテーブル
+
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| menu               | references | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
+
+### Associations
+
+- belongs_to :menu
+- belongs_to :hiit
+
+## hiit_datesテーブル
+
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| hiit               | references | null: false, foreign_key: true |
+| date               | integer    | null: false                    |
+
+### Associations
+
+- belongs_to :menu
 - belongs_to :hiit

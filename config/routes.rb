@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :destroy]
   get "teams/users/:id", to: "users#index"
   resources :menus, except: [:index]
+  resources :hiits, only: [:new, :create]
 end

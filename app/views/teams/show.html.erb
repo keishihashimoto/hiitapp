@@ -40,7 +40,23 @@
     <% end %>
   <% end %>
 </div>
-<div class="team-show team-hiit-container">HIITを表示するボックス</div>
+<div class="team-show team-hiit-container">
+  <div class="title">
+    <div>登録されているHIIT一覧</div>
+    <div>
+      <% if current_user.admin? %>
+      <%= link_to "新しいHIITを登録する", new_hiit_path %>
+      <% end %>
+    </div>
+  </div>
+  <% @team.hiits.each do |hiit| %>
+    <div class="each-menu-container">
+      <%= link_to "#" do %>
+        <%= link_to hiit.name, class:"menu-name" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 <div class="team-show team-menu-container">
   <div class="title">
     <div>登録されているメニュー一覧</div>

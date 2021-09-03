@@ -119,3 +119,14 @@ a{
   flex-direction: column;
   align-items: center;
 }
+
+/* HIIT作成 */
+.day-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.day-container label{
+  display: block;
+  text-align: center;
+}
