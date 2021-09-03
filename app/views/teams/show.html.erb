@@ -13,7 +13,7 @@
     <div>選手・グループ名一覧</div>
     <div>
       <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "新しいグループを作成する", "#" %>
+      <%= link_to "新しいグループを作成する", new_group_path %>
       <% end %>
     </div>
   </div>
@@ -21,7 +21,13 @@
     <% @team.users.each do |user| %>
       <div class="each-member-container">
         <div><%= link_to user.name, "users/#{user.id}" %></div>
-        <div>所属しているグループを表示</div>
+        <div>
+          <% if current_user.user_groups.any? %>
+            <% current_user.user_groups.each do |user_group| %>
+                <%= link_to user_group.group.name, "#" %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     <% end %>
   <% elsif user_signed_in? && !(current_user.admin?) %>
@@ -29,12 +35,24 @@
       <% if current_user.id == user.id %>
         <div class="each-member-container">
           <div><%= link_to user.name, root_path %></div>
-          <div>所属しているグループを表示</div>
+          <div>
+            <% if user.user_groups.any? %>
+              <% user.user_groups.each do |user_group| %>
+                <%= link_to group.group.name, "#" %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       <% else %>
         <div class="each-member-container">
           <div><%= user.name %></div>
-          <div>所属しているグループを表示</div>
+          <div>
+            <% if user.user_groups.any? %>
+              <% user.user_groups.each do |user_group| %>
+                <%= link_to group.group.name, "#" %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       <% end %>
     <% end %>

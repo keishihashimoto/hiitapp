@@ -5,6 +5,7 @@ class Hiit < ApplicationRecord
   has_many :menu_hiits, dependent: :destroy
   has_many :menus, through: :menu_hiits
   has_many :hiit_dates, dependent: :destroy
+  has_many :groups
   # with_options presence: true do
    # validates :name
    # validates :date

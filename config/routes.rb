@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get "teams/users/:id", to: "users#index"
   resources :menus, except: [:index]
   resources :hiits, except: [:index]
+  resources :groups, only: [:new, :create]
 end

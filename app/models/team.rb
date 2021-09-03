@@ -4,4 +4,6 @@ class Team < ApplicationRecord
   has_many :users  
   has_many :menus
   has_many :hiits
+  has_many :groups
+
 end
