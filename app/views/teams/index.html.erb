@@ -7,3 +7,9 @@
     <% end %>
   </div>
 <% end %>
+<% if user_signed_in? && current_user.admin? %>
+  <div>
+  <%= link_to "メニューを作成する", new_menu_path %>
+  <%= link_to "HIITを作成する", new_hiit_path %>
+  <%= link_to "グループを作成する", "#" %>
+<% end %>

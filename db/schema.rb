@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_013832) do
+ActiveRecord::Schema.define(version: 2021_09_02_092316) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,33 @@ ActiveRecord::Schema.define(version: 2021_09_02_013832) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "hiit_dates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "hiit_id", null: false
+    t.integer "date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hiit_id"], name: "index_hiit_dates_on_hiit_id"
+  end
+
+  create_table "hiits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "active_time", null: false
+    t.string "rest_time", null: false
+    t.bigint "team_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_hiits_on_team_id"
+  end
+
+  create_table "menu_hiits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "menu_id", null: false
+    t.bigint "hiit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hiit_id"], name: "index_menu_hiits_on_hiit_id"
+    t.index ["menu_id"], name: "index_menu_hiits_on_menu_id"
+  end
+
   create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.text "text"
@@ -48,6 +75,16 @@ ActiveRecord::Schema.define(version: 2021_09_02_013832) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_teams_on_name", unique: true
+  end
+
+  create_table "user_hiits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "hiit_id", null: false
+    t.datetime "done_dates"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hiit_id"], name: "index_user_hiits_on_hiit_id"
+    t.index ["user_id"], name: "index_user_hiits_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -67,6 +104,10 @@ ActiveRecord::Schema.define(version: 2021_09_02_013832) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "hiit_dates", "hiits"
+  add_foreign_key "hiits", "teams"
+  add_foreign_key "menu_hiits", "hiits"
+  add_foreign_key "menu_hiits", "menus"
   add_foreign_key "menus", "teams"
   add_foreign_key "users", "teams"
 end

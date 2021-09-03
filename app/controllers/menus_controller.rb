@@ -19,6 +19,7 @@ class MenusController < ApplicationController
   end
 
   def show
+    @hiits = set_related_hiits
   end
 
   def edit
@@ -44,6 +45,21 @@ class MenusController < ApplicationController
 
   def set_menu
     @menu = Menu.find(params[:id])
+  end
+
+  def set_related_hiits
+    @hiits = []
+    menu_hiits = []
+    Hiit.all.each do |hiit|
+      menu_hiit = MenuHiit.where(hiit_id: hiit.id, menu_id: @menu.id)[0]
+      if menu_hiit != nil
+        menu_hiits << menu_hiit
+      end
+    end
+    menu_hiits.each do |menu_hiit|
+      @hiits << menu_hiit.hiit
+    end
+    return @hiits
   end
 
 end
