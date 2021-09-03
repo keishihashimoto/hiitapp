@@ -16,13 +16,18 @@
   <div>
     <%= f.label "実施日",:date %><i>(このHIITを実施する曜日に全てチェックを入れてください)</i><br>
     <div class="day-container">
-    <%= f.collection_check_boxes(:date, Wday.all, :id, :name, {}, name: "hiit_menu_hiit[date][]", include_hidden: false) %>
+    <%= f.collection_check_boxes(:date, Wday.all, :id, :name, include_hidden: false, name: "hiit_menu_hiit[date][]") %>
     </div>
   </div>
   <div>
     <% 8.times do |i| %>
       <div>
-        <%= "#{i + 1}番目の種目" %><%= f.collection_select("menu_ids", current_user.team.menus.all, :id, :name, {}, name: "hiit_menu_hiit[menu_ids][]" ) %>
+        <%= "#{i + 1}番目の種目" %><select name="hiit_menu_hiit[menu_ids][]">
+          <option>---</option>
+          <% current_user.team.menus.each do |menu| %>
+            <option value='<%= "#{menu.id}" %>'><%= menu.name %></option>
+          <% end %>
+        </select>
       </div>
     <% end %>
   </div>
