@@ -31,7 +31,7 @@ class HiitMenuHiit
 
   # menu_idsが8つのmenu_idを持っているかどうかを判定するバリデーションメソッド
   def eight_menus?
-    if menu_ids != [] || menu_ids.length != 8 || menu_ids.include?("")
+    if menu_ids == [] || menu_ids.length != 8 || menu_ids.include?("")
       errors.add(:menu_ids, "must be choosen at eight-times")
     end
   end
@@ -39,7 +39,7 @@ class HiitMenuHiit
   # dateが0~6以外の数字を持っていないかどうか、また要素の数が８つ以上になっていないかどうかを判定するバリデーションメソッド
   def collect_date?
 
-    if date = []
+    if date != []
       if date.length >= 8
         errors.add(:date, "is invalid")
       else
