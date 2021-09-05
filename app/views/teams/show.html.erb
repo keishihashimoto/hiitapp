@@ -20,7 +20,7 @@
   <% if user_signed_in? && current_user.admin? %>
     <% @team.users.each do |user| %>
       <div class="each-member-container">
-        <div><%= link_to user.name, "users/#{user.id}" %></div>
+        <div><%= link_to user.name, detail_user_path(user) %></div>
         <div>
           <% if user.user_groups.any? %>
             <% user.user_groups.each do |user_group| %>

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_team, only: [:index]
-  before_action :set_user, only: [:index, :destroy]
-  before_action :admin_user?, only: [:index, :destroy]
-  def index
+  before_action :set_team, only: [:detail]
+  before_action :set_user, only: [:detail, :destroy]
+  before_action :admin_user?, only: [:detail, :destroy]
+  def detail
   end
 
   def destroy

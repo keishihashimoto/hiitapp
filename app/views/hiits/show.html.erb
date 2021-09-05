@@ -33,7 +33,13 @@
             <div><%= link_to group.name, "#" %></div>
             <% if group.user_groups.any? %>
               <% group.user_groups.each do |user_group| %>
-                <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
+                <% if user_signed_in? && current_user.id == user_group.user.id %>
+                  <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
+                <% elsif user_signed_in? && current_user.admin? %>
+                  <div><%= link_to user_group.user.name, detail_user_path(user_group.user) %></div>
+                <% elsif user_signed_in? %>
+                  <div><%= user_group.user.name %></div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
