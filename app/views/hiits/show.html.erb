@@ -24,7 +24,12 @@
       </div>
     <% end %>
   </div>
-  <div>このHIITを登録しているグループ</div>
+  <div>
+    <div>
+      <div>このHIITを登録しているグループ</div>
+      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit) %>
+    </div>
+  </div>
   <div class="link-container">
     <% if user_signed_in? && current_user.admin? %>
       <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>

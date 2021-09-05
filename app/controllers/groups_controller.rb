@@ -1,11 +1,18 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
-  before_action :admin_user?, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :new_restricted]
+  before_action :admin_user?, only: [:new, :create, :new_restricted]
 
   def new
     @group_user_group = GroupUserGroup.new
     @hiits = current_user.team.hiits
     @users = @current_user.team.users
+  end
+
+  def new_restricted
+    @group_user_group = GroupUserGroup.new
+    @hiits = current_user.team.hiits
+    @users = @current_user.team.users
+    @hiit = Hiit.find(params[:hiit_id])
   end
 
   def create

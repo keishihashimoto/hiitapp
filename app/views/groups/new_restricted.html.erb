@@ -8,7 +8,7 @@
     </div>
     <div>
       <%= f.label :hiit_id, "このグループで取り組むHIIT" %>
-      <%= f.collection_select(:hiit_id, @hiits, :id, :name, { prompt: "---" }) %>
+      <%= f.collection_select(:hiit_id, @hiits, :id, :name, { prompt: "---", selected: @hiit.name }) %>
     </div>
     <div>
       <%= f.label :user_ids, "このグループのメンバー" %>

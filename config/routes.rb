@@ -7,4 +7,11 @@ Rails.application.routes.draw do
   resources :menus, except: [:index]
   resources :hiits, except: [:index]
   resources :groups, only: [:new, :create]
+  resources :hiits do
+    resources :groups do
+      collection do
+        get "new_restricted"
+      end
+    end
+  end
 end
