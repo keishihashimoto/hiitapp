@@ -1,4 +1,4 @@
-const showPreview = () => {
+const showPreviewIcon = () => {
   const menuIcon = document.getElementById("menu_icon")
   menuIcon.addEventListener("change", (e) => {
     resetPreview()
@@ -22,4 +22,4 @@ const resetPreview = () => {
   })
 }
 
-window.addEventListener("load", showPreview)
+window.addEventListener("load", showPreviewIcon)

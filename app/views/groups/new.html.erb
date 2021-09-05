@@ -7,8 +7,34 @@
       <%= f.text_field :name %>
     </div>
     <div>
-      <%= f.label :hiit_id, "このグループで取り組むHIIT" %>
-      <%= f.collection_select(:hiit_id, @hiits, :id, :name, { prompt: "---" }) %>
+      <%= f.label :hiit_id, "このグループで取り組むHIIT（一つだけ選択してください）" %>
+      <% if current_user.team.hiits.any? %>
+        <% current_user.team.hiits.each do |hiit| %>
+          <div>
+            <div>
+              <%= f.radio_button :hiit_id, hiit.id %><%= link_to hiit.name, hiit_path(hiit) %>
+              <%= hiit.active_time %>
+              <%= hiit.rest_time %>
+            </div>
+            <div>
+              このHIITを行う曜日：
+              <% Wday.all.each do |wday| %>
+                <div>
+                  <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
+                    <%= wday.name %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <% hiit.menu_hiits.length.times do |i| %>
+              <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
+                <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
+                <%= hiit.menu_hiits[i].menu.name %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <div>
       <%= f.label :user_ids, "このグループのメンバー" %>
