@@ -8,7 +8,7 @@
     </div>
     <div>
       <%= f.label :hiit_id, "このグループで取り組むHIIT" %>
-      <%= f.collection_select(:hiit_id, @hiits, :id, :name, { prompt: "---", selected: @hiit.name }) %>
+      <%= f.collection_select(:hiit_id, @hiits, :id, :name, { prompt: "---", selected: @hiit.id }) %>
     </div>
     <div>
       <%= f.label :user_ids, "このグループのメンバー" %>
@@ -19,6 +19,7 @@
     <div>
       <%= f.submit "グループを登録する" %>
       <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+      <%= link_to "HIITのページに戻る", hiit_path(@hiit) %>
     </div>
     <% end %>
   </div>
