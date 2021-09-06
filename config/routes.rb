@@ -17,5 +17,9 @@ Rails.application.routes.draw do
         get "new_restricted"
       end
     end
+    resources :user_hiits, only: [:create]
+  end
+  resources :user do
+    resources :user_hiits, only: [:index]
   end
 end

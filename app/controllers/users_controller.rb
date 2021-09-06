@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_team, only: [:detail]
-  before_action :set_user, only: [:detail, :destroy]
+  before_action :set_user, only: [:detail, :destroy, :show]
   before_action :admin_user?, only: [:detail, :destroy]
   def detail
     @hiit_for_user = set_hiit_for_user
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @today_hiit_for_current__user = set_today_hiit_for_current_user
+    @today_hiit_for_user = set_today_hiit_for_user
   end
 
   private
