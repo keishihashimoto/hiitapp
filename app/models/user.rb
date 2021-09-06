@@ -7,4 +7,6 @@ class User < ApplicationRecord
   belongs_to :team
   has_many :user_hiits
   has_many :hiits, through: :user_hiits
+  has_many :user_groups, dependent: :destroy
+  has_many :groups, through: :user_groups
 end

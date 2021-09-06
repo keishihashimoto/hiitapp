@@ -1,0 +1,30 @@
+<main>
+  <div><%= "グループ名：#{@group.name}" %></div>
+  <div>このグループで取り組んでいるHIIT：<%= @group.hiit.name %></div>
+  <div><%= "一種目あたりの時間：#{@group.hiit.active_time}" %><%= "休憩時間：#{@group.hiit.rest_time}" %></div>
+  <div>HIITの内容</div>
+  <div>
+    <% @group.hiit.menu_hiits.length.times do |i| %>
+      <div>
+        <%= link_to menu_path(@group.hiit.menu_hiits[i].menu) do %>
+          <%= image_tag @group.hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
+          <%=  @group.hiit.menu_hiits[i].menu.name %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div>このグループのメンバー</div>
+  <div>
+    <%= render "shared/each_user", users: @users %>
+  </div>
+  <div>
+    <% if user_signed_in? && current_user.admin? %>
+      <div>
+        <%= link_to "グループの情報を編集する", edit_group_path(@group) %>
+        <%=  link_to "グループを削除する", group_path(@group), method: :delete %>
+      </div>
+    <% end %>
+    <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+    <%= link_to "自分のページに戻る", root_path %>
+  </div>
+</main>

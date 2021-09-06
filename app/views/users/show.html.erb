@@ -1,6 +1,15 @@
 <div>お名前：<%= link_to current_user.name, user_path(current_user) %></div>
 <div>チーム名：<%= link_to current_user.team.name, team_path(current_user.team)  %></div>
-<div>グループ名：</div>
+<div>
+  グループ名：
+  <% if current_user.user_groups.any? %>
+    <% current_user.user_groups.each do |user_group| %>
+      <div><%= link_to user_group.group.name, group_path(user_group.group) %></div>
+    <% end %>
+  <% else %>
+    参加しているグループはありません
+  <% end %>
+</div>
 <div>本日の予定：</div>
 <div>
   <%= link_to "ユーザー情報を編集する", edit_user_registration_path %>

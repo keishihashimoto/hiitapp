@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
   def index
     if user_signed_in?
       @team = current_user.team
+      @groups = current_user.groups
     end
   end
 
@@ -63,4 +64,5 @@ class TeamsController < ApplicationController
     menu4 = Menu.create(name: "懸垂", team_id: @team.id)
     menu4.icon.attach(io: File.open(Rails.root.join("app/assets/images/pullup.png")), filename: "pullup.png")
   end
+
 end

@@ -3,7 +3,19 @@ Rails.application.routes.draw do
   get root to: "teams#index"
   resources :teams, except: :destroy
   resources :users, only: [:show, :destroy]
-  get "teams/users/:id", to: "users#index"
+  resources :users do
+    member do
+      get "detail"
+    end
+  end
   resources :menus, except: [:index]
   resources :hiits, except: [:index]
+  resources :groups, except: [:index]
+  resources :hiits do
+    resources :groups do
+      collection do
+        get "new_restricted"
+      end
+    end
+  end
 end

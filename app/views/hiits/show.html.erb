@@ -24,7 +24,30 @@
       </div>
     <% end %>
   </div>
-  <div>このHIITを登録しているグループ</div>
+  <div>
+    <div>
+      <div>
+        <div>このHIITを登録しているグループ</div>
+        <% if @hiit.groups.any? %>
+          <% @hiit.groups.each do |group| %>
+            <div><%= link_to group.name, group_path(group) %></div>
+            <% if group.user_groups.any? %>
+              <% group.user_groups.each do |user_group| %>
+                <% if user_signed_in? && current_user.id == user_group.user.id %>
+                  <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
+                <% elsif user_signed_in? && current_user.admin? %>
+                  <div><%= link_to user_group.user.name, detail_user_path(user_group.user) %></div>
+                <% elsif user_signed_in? %>
+                  <div><%= user_group.user.name %></div>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit) %>
+    </div>
+  </div>
   <div class="link-container">
     <% if user_signed_in? && current_user.admin? %>
       <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>
