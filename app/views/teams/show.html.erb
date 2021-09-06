@@ -24,7 +24,7 @@
         <div>
           <% if user.user_groups.any? %>
             <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, "#" %>
+                <%= link_to user_group.group.name, group_path(user_group.group) %>
             <% end %>
           <% end %>
         </div>
@@ -38,7 +38,7 @@
           <div>
             <% if user.user_groups.any? %>
               <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, "#" %>
+                <%= link_to user_group.group.name, group_path(user_group.group) %>
               <% end %>
             <% end %>
           </div>
@@ -49,7 +49,7 @@
           <div>
             <% if user.user_groups.any? %>
               <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, "#" %>
+                <%= link_to user_group.group.name, group_path(user_group.group) %>
               <% end %>
             <% end %>
           </div>

@@ -1,0 +1,11 @@
+<% users.each do |user| %>
+  <div>
+    <% if user_signed_in? && user.id == current_user.id %>
+      <%= link_to user.name, user_path(user) %>
+    <% elsif user_signed_in? && current_user.admin? %>
+      <%= link_to user.name, detail_user_path(user) %>
+    <% elsif user_signed_in? %>
+      <%= user.name %>
+    <% end %>
+  </div>
+<% end %>

@@ -3,6 +3,6 @@ class Menu < ApplicationRecord
   validates :name, uniqueness: true
   belongs_to :team
   has_one_attached :icon
-  has_many :menu_hiits
+  has_many :menu_hiits, dependent: :destroy
   has_many :hiits, through: :menu_hiits
 end

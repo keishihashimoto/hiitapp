@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
   resources :menus, except: [:index]
   resources :hiits, except: [:index]
-  resources :groups, only: [:new, :create]
+  resources :groups, except: [:index]
   resources :hiits do
     resources :groups do
       collection do
