@@ -5,6 +5,6 @@ FactoryBot.define do
     active_time { "#{active_time}秒" }
     rest_time = Faker::Number.number(digits: 2)
     rest_time { "#{rest_time}秒" }
-
+    association :team
   end
 end
