@@ -10,7 +10,16 @@
     参加しているグループはありません
   <% end %>
 </div>
-<div>本日の予定：</div>
+<div>
+  本日の予定：
+  <% if @today_hiit_for_current_user.any? %>
+    <% @today_hiit_for_current_user.each do |today_hiit_for_current_user| %>
+      <%= today_hiit_for_current_user.name %>
+    <% end %>
+  <% else %>
+    本日の予定はありません
+  <% end %>
+  </div>
 <div>
   <%= link_to "ユーザー情報を編集する", edit_user_registration_path %>
   <%= link_to "ホーム画面へ戻る", root_path %>

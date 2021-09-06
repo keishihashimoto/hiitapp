@@ -1,9 +1,18 @@
 <% if user_signed_in? %>
   <div class="weekly-menu-container">
-    <% 7.times do %>
+    <% 7.times do |i| %>
       <div class="daily-menu-container">
-        1日分のトレーニングメニュー
-      </div>
+      <%= "日付：#{Date.today - 3 + i}" %>
+      <% day = (Date.today + i - 3).wday %>
+      <%= "(#{Wday.find(day).name})" %>
+      <% if @hiit_for_current_user.any? %>
+        <% @hiit_for_current_user.each do |hiit_for_current_user| %>
+          <% if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day) %>
+            <div><%= hiit_for_current_user.name %></div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
     <% end %>
   </div>
 <% end %>

@@ -6,6 +6,7 @@ class TeamsController < ApplicationController
     if user_signed_in?
       @team = current_user.team
       @groups = current_user.groups
+      @hiit_for_current_user = set_hiit_for_current_user
     end
   end
 
