@@ -3,6 +3,10 @@ class UserHiitsController < ApplicationController
   
   def index
     @user = User.find(params[:user_id])
+    unless user_signed_in? && (current_user.admin? || current_user.id.to_s == params[:user_id])
+      redirect_to root_path
+    end
+
     @today_hiit_for_user = set_today_hiit_for_user
   end
 
@@ -14,7 +18,7 @@ class UserHiitsController < ApplicationController
     else
       UserHiit.create(user_id: current_user.id, hiit_id: params[:hiit_id], done_dates: Date.today)
     end
-    redirect_to action: :index
+    redirect_to user_user_hiits_path(current_user)
   end
 
 end

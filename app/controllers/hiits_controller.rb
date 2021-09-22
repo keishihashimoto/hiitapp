@@ -1,8 +1,9 @@
 class HiitsController < ApplicationController
   before_action :admin_user?, only: [:create, :new, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :show]
   before_action :set_team, only: [:create, :edit, :destroy]
   before_action :set_hiit, only: [:show, :edit, :update, :destroy]
+  before_action :set_messages, only: [:show, :destroy]
   def new
     @hiit_menu_hiit = HiitMenuHiit.new
   end
@@ -40,8 +41,16 @@ class HiitsController < ApplicationController
   end
 
   def destroy
-    @hiit.destroy
-    redirect_to team_path(@team)
+    if Group.exists?(hiit_id: @hiit.id)
+      @messages << "Since group using this hiit exists, this hiit can't be deleted"
+      @menus = set_menus_of_hiit
+      @wday_list = set_hiit_dates
+      render :show
+    else
+      @hiit.destroy
+      redirect_to team_path(@team)
+    end
+    
   end
 
 

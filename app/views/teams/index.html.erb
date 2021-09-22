@@ -1,36 +1,76 @@
-<% if user_signed_in? %>
-  <div class="weekly-menu-container">
-    <% 7.times do |i| %>
-      <div class="daily-menu-container">
-      <%= "日付：#{Date.today - 3 + i}" %>
-      <% day = (Date.today + i - 3).wday %>
-      <%= "(#{Wday.find(day).name})" %>
-      <% if @hiit_for_current_user.any? %>
-        <% @hiit_for_current_user.each do |hiit_for_current_user| %>
-          <% if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day) %>
-            <div>
-              <%= hiit_for_current_user.name %>
-              <% if UserHiit.exists?(user_id: current_user.id, hiit_id: hiit_for_current_user.id, done_dates: (Date.today - 3 + i)) %>
-                実施済み
-              <% else %>
-                未実施
-              <% end %>
+<main>
+  <% if user_signed_in? %>
+    <h1 class="shared-title"><%= current_user.name %>さんのマイページです</h1>
+    <div class="weekly-menu-container">
+      <% 7.times do |i| %>
+        <div class="daily-menu-container">
+          <div class="container-except-today">
+            <div class="date-container">
+              <%= "#{(Date.today - 3 + i).strftime('%m/%d')}" %>
+              <% day = (Date.today + i - 3).wday %>
+              <%= "(#{Wday.find(day).name.slice(0)})" %>
             </div>
+            <% if @hiit_for_current_user.any? %>
+              <% 
+                that_day_hiit_for_current_user = []
+                @hiit_for_current_user.each do |hiit_for_current_user|
+                  if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day)
+                    HiitDate.where(hiit_id: hiit_for_current_user.id, date: day).each do |hiit_date|
+                      that_day_hiit_for_current_user << hiit_date.hiit
+                    end
+                  end
+                end
+              %>
+              <% if that_day_hiit_for_current_user.length > 4 %>
+                <% 3.times do |j| %>
+                  <div class="todays-hiit-container">
+                    <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[j].id, done_dates: (Date.today - 3 + i)) %>
+                      ✅
+                    <% else %>
+                      ❌
+                    <% end %>
+                    <%= link_to that_day_hiit_for_current_user[j].name, hiit_path(that_day_hiit_for_current_user[j]) %>
+                  </div>
+                <% end %>
+                <div class="todays-hiit-container">
+                    <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[3].id, done_dates: (Date.today - 3 + i)) %>
+                      ✅
+                    <% else %>
+                      ❌
+                    <% end %>
+                    <%= link_to that_day_hiit_for_current_user[3].name, hiit_path(that_day_hiit_for_current_user[3]) %> ...
+                  </div>
+              <% elsif @hiit_for_current_user.any? %>
+                <% @hiit_for_current_user.each do |hiit_for_current_user| %>
+                  <% if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day) %>
+                    <div class="todays-hiit-container">
+                      <% if UserHiit.exists?(user_id: current_user.id, hiit_id: hiit_for_current_user.id, done_dates: (Date.today - 3 + i)) %>
+                        ✅
+                      <% else %>
+                        ❌
+                      <% end %>
+                      <%= link_to hiit_for_current_user.name, hiit_path(hiit_for_current_user) %>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <% if i == 3 %>
+            <div class="link-to-today">
+              <%= link_to "今日の予定を見る", user_user_hiits_path(current_user) %>
+            </div>
+
           <% end %>
-        <% end %>
-      <% end %>
-      <% if i == 3 %>
-        <div>
-          <%= link_to "今日の予定を見る", user_user_hiits_path(current_user) %>
         </div>
       <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-<% if user_signed_in? && current_user.admin? %>
-  <div>
-  <%= link_to "メニューを作成する", new_menu_path %>
-  <%= link_to "HIITを作成する", new_hiit_path %>
-  <%= link_to "グループを作成する", new_group_path %>
-<% end %>
+    </div>
+  <% end %>
+  <% if user_signed_in? && current_user.admin? %>
+    <div class="link-container">
+      <%= link_to "メニューを作成する", new_menu_path %>
+      <%= link_to "HIITを作成する", new_hiit_path %>
+      <%= link_to "グループを作成する", new_group_path %>
+    </div>
+  <% end %>
+</main>

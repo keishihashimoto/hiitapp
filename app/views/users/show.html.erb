@@ -1,32 +1,61 @@
-<div>お名前：<%= link_to @user.name, user_path(@user) %></div>
-<div>チーム名：<%= link_to @user.team.name, team_path(@user.team)  %></div>
-<div>
-  グループ名：
-  <% if @user.user_groups.any? %>
-    <% @user.user_groups.each do |user_group| %>
-      <div><%= link_to user_group.group.name, group_path(user_group.group) %></div>
+<main>
+  <% if @messages.any? %>
+    <% @messages.each do |message| %>
+      <div class="error-message">
+        <%= message %>
+      </div>
     <% end %>
-  <% else %>
-    参加しているグループはありません
   <% end %>
-</div>
-<div>
-  本日の予定：
-  <% if @today_hiit_for_user.any? %>
-    <div>
-    <% @today_hiit_for_user.each do |today_hiit_for_user| %>
-      <%= today_hiit_for_user.name %>
-    <% end %>
-    </div>
-    <div>
+  <h1 class="shared-title"><%= "#{@user.name}さんの詳細ページです" %></h1>
+  <table class="user-show-table">
+    <tr>
+      <th>お名前</th>
+      <td><%= link_to @user.name, user_path(@user) %></td>
+    </tr>
+    <tr>
+      <th>チーム名</th>
+      <td><%= link_to @user.team.name, team_path(@user.team)  %></td>
+    </tr>
+    <tr>
+      <th>グループ名</th>
+      <td>
+        <% if @user.user_groups.any? %>
+          <% @user.user_groups.each do |user_group| %>
+            <div><%= link_to user_group.group.name, group_path(user_group.group) %></div>
+          <% end %>
+        <% else %>
+          参加しているグループはありません
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>本日の予定</th>
+      <td>
+        <% if @today_hiit_for_user.any? %>
+          <% @today_hiit_for_user.each do |today_hiit_for_user| %>
+            <%= link_to today_hiit_for_user.name, hiit_path(today_hiit_for_user) %>
+          <% end %>
+        <% else %>
+          本日の予定はありません
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <% if user_signed_in? && (current_user.admin? || current_user.id == @user.id) %>
+    <div class="link-container">  
       <%= link_to "本日の詳しい予定を見る", user_user_hiits_path(@user) %>
-  <% else %>
-    本日の予定はありません
+      <%= link_to "元のページに戻る", detail_user_path(@user) %>
+    </div>
   <% end %>
+  <div class="link-container">  
+    <% if user_signed_in? && current_user.id == @user.id %>
+      <%= link_to "ユーザー情報を編集する", edit_user_registration_path %>
+    <% end %>
+    <%= link_to "ホーム画面へ戻る", root_path %>
   </div>
-<div>
-  <% if user_signed_in? && current_user.id == @user.id %>
-    <%= link_to "ユーザー情報を編集する", edit_user_registration_path %>
+  <% if user_signed_in? && current_user.admin? %>
+    <div class="link-container">  
+      <%= link_to "#{@user.name}を削除する", user_path(@user), method: :delete %>
+    </div>
   <% end %>
-  <%= link_to "ホーム画面へ戻る", root_path %>
-</div>
+</main>

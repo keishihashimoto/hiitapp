@@ -23,8 +23,15 @@
     </div>
     <div class="group">
       <% if current_user.user_groups.any? %>
-        <% current_user.user_groups.each do |user_group| %>
-          <%= link_to user_group.group.name, group_path(user_group.group) %>
+        <% if current_user.user_groups.length <= 4 %>
+          <% current_user.user_groups.each do |user_group| %>
+            <%= link_to user_group.group.name, group_path(user_group.group) %>
+          <% end %>
+        <% else %>
+          <% 4.times do |i| %>
+            <%= link_to current_user.user_groups[i].group.name, group_path(current_user.user_groups[i].group) %>
+          <% end %>
+          <span>...</span>
         <% end %>
       <% end %>
     </div>

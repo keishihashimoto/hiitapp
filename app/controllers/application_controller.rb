@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:admin])
   end
   def admin_user?
-    unless current_user.admin?
+    unless (user_signed_in? && current_user.admin?)
       redirect_to root_path
     end
   end
@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base
       end
     end
     return @today_hiit_for_user
+  end
+
+  def set_messages
+    @messages = []
   end
 
 end

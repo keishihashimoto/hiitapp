@@ -1,4 +1,11 @@
-<main class="menu-show-main">
+<main>
+  <% if @messages.any? %>
+    <% @messages.each do |message| %>
+      <div class="error-message">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
   <div class="menu-name-container">
     <%= @menu.name %>
   </div>
@@ -6,13 +13,20 @@
     <%= image_tag @menu.icon %>
   </div>
   <div class="menu-text-container">
-    <%= @menu.text %>
+    <% if @menu.text != "" %>
+      <%= @menu.text %>
+    <% else %>
+      説明文は特にありません
+    <% end %>
   </div>
   <div class="related-hiit-container">
-    <div>このメニューが含まれているHIIT</div>
+    <p>このメニューが含まれているHIIT：</p>
     <div>
       <% @hiits.each do |hiit| %>
-        <div><%= link_to hiit.name, hiit_path(hiit) %></div>
+        <%= link_to hiit.name, hiit_path(hiit) %>
+      <% end %>
+      <% unless @hiits.any? %>
+        このメニューが含まれているHIITはありません
       <% end %>
     </div>
   </div>
@@ -21,6 +35,7 @@
       <%= link_to "メニューを編集する", edit_menu_path(@menu) %>
       <%= link_to "メニューを削除する", menu_path(@menu), method: :delete %>
       <%= link_to "メニューを作成する", new_menu_path %>
+      <%= link_to "自分のページに戻る", root_path %>
       <%= link_to "チームのページに戻る", team_path(@menu.team) %>
     <% elsif user_signed_in? %>
       <%= link_to "自分のページに戻る", root_path %>
