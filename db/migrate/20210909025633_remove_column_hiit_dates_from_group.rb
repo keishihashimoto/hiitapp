@@ -1,6 +1,6 @@
 class RemoveColumnHiitDatesFromGroup < ActiveRecord::Migration[6.0]
   def up
-    remove_column :groups :group
+    remove_column :groups, :group
   end
 
   def down
