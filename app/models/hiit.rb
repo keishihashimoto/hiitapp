@@ -1,11 +1,11 @@
 class Hiit < ApplicationRecord
   belongs_to :team
-  has_many :user_hiits
+  has_many :user_hiits, dependent: :destroy
   has_many :users, through: :user_hiits
   has_many :menu_hiits, dependent: :destroy
   has_many :menus, through: :menu_hiits
   has_many :hiit_dates, dependent: :destroy
-  has_many :groups
+  has_one :group
   # with_options presence: true do
    # validates :name
    # validates :date

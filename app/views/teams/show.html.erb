@@ -1,95 +1,109 @@
-<div class="team-show team-name-container">
-  <div class="team-name">
-    <%= link_to @team.name, team_path(@team) %>
-  </div>
-  <div>
-  <% if user_signed_in? && current_user.admin? %>
-    <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
-  <% end %>
-  </div>
-</div>
-<div class="team-show team-member-container">
-  <div class="title">
-    <div>選手・グループ名一覧</div>
-    <div>
+<main>
+  <table class="team-show-table">
+  <tr class="team-show-key-tr">
+    <th>
+      <%= link_to @team.name, team_path(@team) %>
+    </th>
+    <td class="border-on">
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
+    <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>選手・グループ一覧</th>
+    <td class="border-on">
       <% if user_signed_in? && current_user.admin? %>
       <%= link_to "新しいグループを作成する", new_group_path %>
       <% end %>
-    </div>
-  </div>
-  <% if user_signed_in? && current_user.admin? %>
-    <% @team.users.each do |user| %>
-      <div class="each-member-container">
-        <div><%= link_to user.name, detail_user_path(user) %></div>
-        <div>
-          <% if user.user_groups.any? %>
-            <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, group_path(user_group.group) %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  <% elsif user_signed_in? && !(current_user.admin?) %>
-    <% @team.users.each do |user| %>
-      <% if current_user.id == user.id %>
-        <div class="each-member-container">
-          <div><%= link_to user.name, root_path %></div>
-          <div>
+    </th>
+  </tr>
+    <% if user_signed_in? && current_user.admin? %>
+      <% @team.users.each do |user| %>
+        <tr>
+          <th class="team-show-key-th name-th"><%= link_to user.name, detail_user_path(user) %></th>
+          <td class="border-on flex-td">
             <% if user.user_groups.any? %>
               <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, group_path(user_group.group) %>
+                  <%= link_to user_group.group.name, group_path(user_group.group) %>
               <% end %>
             <% end %>
-          </div>
-        </div>
-      <% else %>
-        <div class="each-member-container">
-          <div><%= user.name %></div>
-          <div>
-            <% if user.user_groups.any? %>
-              <% user.user_groups.each do |user_group| %>
-                <%= link_to user_group.group.name, group_path(user_group.group) %>
+          </td>
+        </tr>
+      <% end %>
+    <% elsif user_signed_in? && !(current_user.admin?) %>
+      <% @team.users.each do |user| %>
+        <% if current_user.id == user.id %>
+          <tr>
+            <th class="team-show-key-th name-th"><%= link_to user.name, root_path %></th>
+            <td class="border-on">
+              <% if user.user_groups.any? %>
+                <% user.user_groups.each do |user_group| %>
+                  <%= link_to user_group.group.name, group_path(user_group.group) %>
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
-        </div>
+            </td>
+          </tr>
+        <% else %>
+          <tr>
+            <th class="team-show-key-th name-th"><%= user.name %></th>
+            <td class="border-on">
+              <% if user.user_groups.any? %>
+                <% user.user_groups.each do |user_group| %>
+                  <%= link_to user_group.group.name, group_path(user_group.group) %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</div>
-<div class="team-show team-hiit-container">
-  <div class="title">
-    <div>登録されているHIIT一覧</div>
-    <div>
+  <tr class="team-show-key-tr-sub">
+    <th class="team-show-key-th">登録されているHIIT一覧</th>
+    <td class="border-on">
       <% if current_user.admin? %>
       <%= link_to "新しいHIITを登録する", new_hiit_path %>
       <% end %>
-    </div>
-  </div>
-  <% @team.hiits.each do |hiit| %>
-    <div class="each-menu-container">
-        <%= link_to hiit.name, hiit_path(hiit), class:"menu-name" %>
-    </div>
-  <% end %>
-</div>
-<div class="team-show team-menu-container">
-  <div class="title">
-    <div>登録されているメニュー一覧</div>
-    <div>
+    </td>
+  </tr>
+    <% @team.hiits.each do |hiit| %>
+      <tr>
+        <th class="hiit-thread name-th">
+          <%= link_to hiit.name, hiit_path(hiit), class:"menu-name" %>
+        </th>
+        <td class="hiit-group-td">
+          <% if hiit.group != nil %>
+            <%= link_to hiit.group.name, group_path(hiit.group) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <table class="team-show-table-second">
+  <tr class="team-show-key-tr-sub">
+    <th class="team-show-key-th">
+      <div>登録されているメニュー一覧</div>
       <% if current_user.admin? %>
-      <%= link_to "新しいメニューを登録する", new_menu_path %>
+        <span class="make-thin"><%= link_to "新しいメニューを登録する", new_menu_path %></span>
       <% end %>
-    </div>
-  </div>
-  <% @team.menus.each do |menu| %>
-    <div class="each-menu-container">
-      <%= link_to menu_path(menu) do %>
-        <% if menu.icon.attached? %>
-          <%= image_tag menu.icon.variant(resize: "100x100"), class:"menu-icon" %>
+    </th>
+  </tr>
+  <tr>
+    <td class="menu-td">
+      <div class="menu-containers">
+        <% @team.menus.each do |menu| %>
+          <div class="each-menu-container">
+            <div></div>
+            <%= link_to menu_path(menu) do %>
+              <% if menu.icon.attached? %>
+                <%= image_tag menu.icon.variant(resize: "100x100"), class:"menu-icon" %>
+              <% end %>
+                <%= menu.name %>
+            <% end %>
+          </div>
         <% end %>
-        <%= link_to menu.name, class:"menu-name" %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+      </div>
+    </td>
+  </tr>
+  </table>
+</main>

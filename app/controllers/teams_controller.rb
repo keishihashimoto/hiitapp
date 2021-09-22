@@ -2,10 +2,12 @@ class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update]
   before_action :authenticate_user!, only: [:show, :edit, :update]
   before_action :get_root, only: [:new]
+  before_action :admin_user?, only: [:update, :edit]
   def index
     if user_signed_in?
       @team = current_user.team
       @groups = current_user.groups
+      @hiit_for_current_user = set_hiit_for_current_user
     end
   end
 

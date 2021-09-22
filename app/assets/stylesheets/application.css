@@ -15,9 +15,28 @@
  */
  
 /* リンクの下線と色を無効化 */
+html * {
+  -webkit-box-sizing: border-box;
+}
+
 a{
   text-decoration: none;
   color: black;
+  padding: 5px;
+}
+
+a:hover{
+  background: lightgrey;
+}
+
+/* 共通部分 */
+main, header, footer{
+  margin: 0 10%;
+}
+
+.error-message{
+  font-weight: bold;
+  color: red;
 }
 
  /* 共通ヘッダー */
@@ -25,11 +44,13 @@ a{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 /* ヘッダーロゴ */
 .header-logo{
   font-size: 40px;
+  margin-right: 20px;
 }
 
 /* ヘッダー右側のメニュー */
@@ -40,19 +61,115 @@ a{
 
 .team-user-container{
   display: flex;
+  flex-wrap: wrap;
+  font-size: larger;
+}
+
+.team-user-container div{
+  padding: 0 5px;
 }
 
 .group{
+  padding: 0 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.group a{
+  display: block;
+}
+
+.team-menus-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* 共通部分のタイトル */
+h1.shared-title{
   text-align: center;
+  background-color: whitesmoke;
+  width: 100%;
+  margin-left: 10px;
+  padding: 10px 0;
+  border-top: 2px double lightgray;
+  border-bottom: 2px double lightgray;
+}
+
+/* ページ下部のリンク・使い回し */
+.link-container{
+  background-color: whitesmoke;
+  margin-left: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.link-container a{
+  display: block;
 }
 
 /* ユーザートップ */
 .weekly-menu-container{
   display: flex;
+  flex-wrap: wrap;
 }
 
 .daily-menu-container{
   border: 3px solid black;
+  width: 150px;
+  height: 300px;
+  margin: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+
+.link-to-today{
+  text-align: center;
+}
+
+.date-container{
+  text-align: center;
+  padding: 5px 0;
+  background-color: whitesmoke;
+  border-bottom: 3px double gray;
+}
+
+.todays-hiit-container{
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.dot{
+  text-align: center;
+  vertical-align: top;
+}
+
+/* ユーザー詳細 */
+.user-show-table{
+  width: 100%;
+}
+
+.user-show-table th{
+  width: 120px;
+  border-right: 2px dotted lightgray;
+}
+
+.user-show-table td{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.user-show-table a{
+  background-color: whitesmoke;
+  border: 2px solid lightgray;
+  display: block;
+  margin: 5px;
 }
 
 /* チーム登録画面 */
@@ -61,9 +178,14 @@ a{
   text-align: center;
 }
 
+
 .team-name-field, .team-new-btn{
   display: block;
   margin: 0 auto;
+}
+
+.team-name-field{
+  width: 300px;
 }
 
 /* チーム詳細画面 */
@@ -71,6 +193,12 @@ a{
 .team-name-container{
   display: flex;
   justify-content: space-around;
+}
+
+.team-name{
+  width: 50%;
+  font-size: large;
+  margin-bottom: 10px;
 }
 
 .team-menu-container{
@@ -82,9 +210,19 @@ a{
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 5px;
+}
+
+.member-group{
+  width: 50%;
+  padding-left: 15px;
+  font-size: large;
 }
 
 .each-member-container{
+  width: 50%;
+  padding-left: 10px;
+  padding-bottom: 5px;
   display: flex;
   justify-content: space-around;
 }
@@ -93,31 +231,207 @@ a{
   width: 40%;
 }
 
+.team-hiit-container .title{
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.title .team-hiits{
+  width: 50%;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  font-size: large;
+}
+
+.hiits-container{
+  padding-left: 25px;
+}
+
+.each-hiit-container{
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+.hiit-thread {
+  padding: 10px 0;
+}
+
+.hiit-group-td{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hiit-group-td a{
+  display: block;
+  border: 2px solid lightgray;
+  background-color: whitesmoke;
+}
+
+.team-menu-container .title{
+  font-size: large;
+  padding-left: 15px;
+}
+
+.team-menu-container .menu-containers{
+  padding-left: 25px;
+}
+
 .each-menu-container a{
   display: block;
   text-align: center;
 }
 
+.each-menu-container{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  padding: 10px;
+}
+
+.each-menu-container img{
+  display: block;
+}
+
+
+.menu-containers{
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.each-menu-container a{
+  text-align: center;
+}
+
+.team-show-table {
+  width: 100%;
+}
+
+.team-show-table td{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.team-show-table th, .team-show-table-second th{
+  background-color: white;
+}
+
+.team-show-table a, .team-show-table-second a{
+  margin: 5px 5px 5px 0;
+}
+
+.team-show-table, .team-show-table-second{
+  border: 3px solid gray;
+  width: 100%;
+}
+
+.team-show-table .name-th, .team-show-table-second th {
+  border-right: 2px dotted lightgray;
+}
+
+.team-show-table .border-on a{
+  border: 2px solid lightgray;
+  background-color: whitesmoke;
+}
+
+.team-show-table th, .team-show-table-second th{
+  text-align: left;
+  padding-left: 20px;
+}
+
+.team-show-table td a{
+  margin-left: 10px;
+}
+
+.team-show-key-tr{
+  border-bottom: 4px double lightgray;
+}
+
+.team-show-key-tr-sub{
+  border-top: 4px double lightgray;
+}
+
+.team-show-table .flex-td{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.team-show-table .flex-td a{
+  display: block;
+}
+
+.team-show-table-second{
+  width: 100%;
+}
+
+.team-show-table-second .team-show-key-th{
+  display: flex;
+  justify-content: space-between;
+  border-right: none;
+  padding: 10px;
+}
+
+.team-show-table-second th a{
+  border: 2px solid lightgray;
+  background-color: whitesmoke;
+}
+
 /* チーム編集画面 */
+.team-main-title{
+  margin: 20px 0;
+  font-size: larger;
+}
+
+.team-name-field{
+  font-size: large;
+  margin-bottom: 10px;
+}
+
 .team-main a{
   display: block;
   text-align: center;
 }
 
 /* メニュー作成画面 */
-.menu-detail div{
-  text-align: center;
-}
 
 .menu-detail label{
   display: block;
+  font-size: 24px;
+}
+
+.menu-detail input {
+  font-size: 16px;
+}
+
+/* メニュー編集 */
+.form-title{
+  margin-bottom: 10px;
+}
+
+.form-title label{
+  margin-bottom: 5px;
 }
 
 /* メニュー詳細 */
-.menu-show-main{
+
+.menu-name-container{
+  font-size: 30px;
+}
+
+.menu-text-container{
+  margin-bottom: 10px;
+}
+
+.related-hiit-container{
   display: flex;
-  flex-direction: column;
   align-items: center;
+}
+
+.related-hiit-container p{
+  font-size: larger;
 }
 
 /* HIIT作成 */
@@ -128,5 +442,229 @@ a{
 
 .day-container label{
   display: block;
+  text-align: center;
+}
+
+.hiit-show-hiit-abstract{
+  margin-bottom: 10px;
+}
+
+.hiit-dates-container{
+  padding-left: 10px;
+  display: flex;
+}
+
+.hiit-dates-container div{
+  padding-left: 10px;
+}
+
+.hiit-dates-container-title{
+  font-size: large;
+}
+
+/* hiit詳細 */
+.hiit-show-title{
+  margin-bottom: 10px;
+}
+
+.hiit-show-title span{
+  font-size: 30px;
+}
+
+.menu-containers-title{
+  font-size: large;
+  margin-top: 10px;
+}
+
+.hiit-group-title{
+  font-size: large;
+}
+
+td{
+  display: flex;
+}
+
+table{
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-collapse: collapse;
+}
+
+tr{
+  border: 1px solid lightgray
+}
+
+th{
+  background-color: whitesmoke;
+  font-size: large;
+}
+
+.link-container{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.link-container a{
+  display: block;
+}
+
+.hiit-show-table{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.hiit-show-table .title-th{
+  background-color: whitesmoke;
+}
+
+.hiit-show-table .group-name-th{
+  background-color: white;
+  border-right: 2px dotted lightgray;
+}
+
+.hiit-show-table th, .hiit-show-table td{
+  padding: 10px 0;
+}
+
+.hiit-show-table td a, .hiit-show-table th a{
+  margin: 0 10px;
+}
+
+/* グループ編集 */
+.menu-detail div{
+  padding-bottom: 10px;
+}
+
+.menu-detail .link-container{
+  padding-bottom: 0;
+}
+
+.each-hiit-container .hiit-name{
+  font-size: 25px;
+}
+
+
+.each-hiit-container .hiit-abstract{
+  margin: 5px 10px 10px 10px;
+  padding-bottom: 0;
+  border-bottom: 3px double gray;
+}
+
+.each-hiit-container .hiit-day-container{
+  padding: 5px 20px;
+}
+
+.each-hiit-container .today-menu-container{
+  width: 25%;
+  padding: 5px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.member-container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.member-container label{
+  padding: 0 10px;
+}
+
+.day-container label {
+  font-size: medium;
+}
+
+.btn{
+  margin-bottom: 10px;
+}
+
+.lower-link a{
+  margin: 0 20px 0 0;
+}
+
+/* グループ詳細 */
+.team-show-group-name, .team-show-hiit-name{
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+.group-show-hiit-abstract{
+  margin-bottom: 10px;  
+}
+
+.group-hiit-title{
+  font-size: large;
+}
+
+.group-users-container{
+  display: flex;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.this-group-member{
+  font-size: large;
+}
+
+/* 当日の詳細メニュー画面 */
+.today-task-table th {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.today-task-table span{
+  font-size: 30px;
+}
+
+.today-task-table i{
+  font-weight: lighter;
+}
+
+
+.today-menus-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.today-menu-container img{
+  display: block;
+  margin: 0 auto;
+}
+
+.today-task-table{
+  width: 100%;
+}
+
+.today-task-table th, .today-task-table td{
+  padding: 10px;
+}
+
+.today-task-table .today-menu-container{
+  margin: 5px 10px;
+}
+
+.today-task-table .today-menu-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.today-task-table .today-menu-container a{
+  display: block;
+  text-align: center;
+}
+
+.menu-number{
+  border-top: 3px double lightgray;
+  border-bottom: 3px double lightgray;
+  width: 100%;
   text-align: center;
 }

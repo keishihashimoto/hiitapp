@@ -1,5 +1,6 @@
 <main>
   <%= render "shared/error_messages", model: @group_user_group %>
+  <h1>グループ編集のページです</h1>
   <div class="menu-detail">
     <%= form_with model: @group_user_group, url: group_path(@group), method: :patch, local: true do |f| %>
     <div>
@@ -7,44 +8,74 @@
       <%= f.text_field :name %>
     </div>
     <div>
-      <%= f.label :hiit_id, "このグループで取り組むHIIT（一つだけ選択してください）" %>
-      <% if current_user.team.hiits.any? %>
-        <% current_user.team.hiits.each do |hiit| %>
-          <div>
-            <div>
-              <%= f.radio_button :hiit_id, hiit.id %><%= link_to hiit.name, hiit_path(hiit) %>
-              <%= hiit.active_time %>
-              <%= hiit.rest_time %>
+      <%= f.label :hiit_id, "このグループで取り組むHIIT" %><i>（一つだけ選択してください）</i>
+
+        <div class="each-hiit-container">
+          <div class="hiit-abstract">
+            <%= f.radio_button :hiit_id, @hiit.id %><%= link_to @hiit.name, hiit_path(@hiit), class: "hiit-name" %>
+            <span>1種目あたりの時間：<%= @hiit.active_time %></span>
+            <span>休憩時間：<%= @hiit.rest_time %></span>
+          </div>
+          <div class="hiit-day-container">
+            このHIITを行う曜日：
+            <% Wday.all.each do |wday| %>
+              <% if HiitDate.exists?(hiit_id: @hiit.id, date: wday.id) %>
+                <%= wday.name %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="today-menus-container">
+            <% @hiit.menu_hiits.length.times do |i| %>
+              <div class="today-menu-container">
+                <div><%= "#{i + 1}種目目" %></div>
+                <%= link_to menu_path(@hiit.menu_hiits[i].menu) do %>
+                  <%= image_tag @hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
+                  <%= @hiit.menu_hiits[i].menu.name %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% if @enable_hiits.any? %>
+        <% @enable_hiits.each do |hiit| %>
+          <div class="each-hiit-container">
+            <div class="hiit-abstract">
+              <%= f.radio_button :hiit_id, hiit.id %><%= link_to hiit.name, hiit_path(hiit), class: "hiit-name" %>
+              <span>1種目あたりの時間：<%= hiit.active_time %></span>
+              <span>休憩時間：<%= hiit.rest_time %></span>
             </div>
-            <div>
+            <div class="hiit-day-container">
               このHIITを行う曜日：
               <% Wday.all.each do |wday| %>
-                <div>
-                  <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
-                    <%= wday.name %>
+                <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
+                  <%= wday.name %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="today-menus-container">
+              <% hiit.menu_hiits.length.times do |i| %>
+                <div class="today-menu-container">
+                  <div><%= "#{i + 1}種目目" %></div>
+                  <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
+                    <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
+                    <%= hiit.menu_hiits[i].menu.name %>
                   <% end %>
                 </div>
               <% end %>
             </div>
-            <% hiit.menu_hiits.length.times do |i| %>
-              <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
-                <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
-                <%= hiit.menu_hiits[i].menu.name %>
-              <% end %>
-            <% end %>
           </div>
         <% end %>
       <% end %>
     </div>
     <div>
       <%= f.label :user_ids, "このグループのメンバー" %>
-      <div class="day-container">
-      <%= f.collection_check_boxes(:user_ids, current_user.team.users, :id, :name, {include_hidden: false}, name: "group_user_group[user_ids][]") %>
+      <div class="member-container">
+        <%= f.collection_check_boxes(:user_ids, current_user.team.users, :id, :name, {include_hidden: false, checked: @group_user_group.user_ids}, name: "group_user_group[user_ids][]") %>
       </div>
     </div>
     <div>
-      <%= f.submit "グループを編集する" %>
-      <div>
+      <%= f.submit "グループを編集する", class:"btn" %>
+      <div class="lower-link">
         <%= link_to "チームのページに戻る", team_path(current_user.team) %>
         <%= link_to "グループのページに戻る", group_path(@group) %>
       </div>

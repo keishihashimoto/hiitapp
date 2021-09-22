@@ -1,5 +1,12 @@
 <main>
   <%= render "shared/error_messages", model: @group_user_group %>
+  <% if @messages.any? %>
+    <% @messages.each do |message| %>
+      <div class="error-message">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
   <div class="menu-detail">
     <%= form_with model: @group_user_group, url: groups_path, local: true do |f| %>
     <div>
@@ -7,44 +14,52 @@
       <%= f.text_field :name %>
     </div>
     <div>
-      <%= f.label :hiit_id, "このグループで取り組むHIIT（一つだけ選択してください）" %>
-      <% if current_user.team.hiits.any? %>
-        <% current_user.team.hiits.each do |hiit| %>
+      <div >"このグループで取り組むHIIT"<i>（一つだけ選択してください）</i></div>
+      <% if @enable_hiits.any? %>
+        <% @enable_hiits.each do |hiit| %>
           <div>
             <div>
-              <%= f.radio_button :hiit_id, hiit.id %><%= link_to hiit.name, hiit_path(hiit) %>
+              <%= f.radio_button :hiit_id, hiit.id %>
+              <%= f.label :hiit_id, hiit.name %>
               <%= hiit.active_time %>
               <%= hiit.rest_time %>
             </div>
             <div>
               このHIITを行う曜日：
               <% Wday.all.each do |wday| %>
-                <div>
                   <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
                     <%= wday.name %>
+                  <% end %>
+              <% end %>
+            </div>
+            <div class="menu-containers">
+              <% hiit.menu_hiits.length.times do |i| %>
+                <div class="each-menu-container">
+                  <div><%= "#{i + 1}種目目" %></div>
+                  <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
+                    <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "100x100") %>
+                    <%= hiit.menu_hiits[i].menu.name %>
                   <% end %>
                 </div>
               <% end %>
             </div>
-            <% hiit.menu_hiits.length.times do |i| %>
-              <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
-                <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "50x50") %>
-                <%= hiit.menu_hiits[i].menu.name %>
-              <% end %>
-            <% end %>
           </div>
         <% end %>
+      <% else %>
+        <div>現在利用可能なHIITはありません</div>
       <% end %>
     </div>
     <div>
       <%= f.label :user_ids, "このグループのメンバー" %>
-      <div class="day-container">
+      <div class="member-container">
       <%= f.collection_check_boxes(:user_ids, @users, :id, :name, include_hidden: false, name: "group_user_group[user_ids][]") %>
       </div>
     </div>
     <div>
-      <%= f.submit "グループを登録する" %>
-      <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+      <%= f.submit "グループを登録する", class:"btn" %>
+      <div class="lower-link">
+        <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+      </div>
     </div>
     <% end %>
   </div>

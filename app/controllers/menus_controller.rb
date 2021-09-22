@@ -2,6 +2,7 @@ class MenusController < ApplicationController
   before_action :admin_user?, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show]
+  before_action :set_messages, only: [:show, :destroy]
   def new
     @menu = Menu.new
   end
@@ -34,8 +35,14 @@ class MenusController < ApplicationController
   end
 
   def destroy
-    @menu.destroy
-    redirect_to team_path(current_user.team)
+    if MenuHiit.exists?(menu_id: @menu.id)
+      @messages << "Since hiit using this menu exists, this menu can't be deleted."
+      @hiits = set_related_hiits
+      render :show
+    else
+      redirect_to team_path(current_user.team)
+      @menu.destroy
+    end
   end
 
   private

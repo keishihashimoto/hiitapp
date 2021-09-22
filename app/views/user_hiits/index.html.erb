@@ -1,0 +1,43 @@
+<main>
+  <h1><%= link_to @user.name, user_path(@user) %>さんの本日の予定です</h1>
+  <% if @today_hiit_for_user.any? %>
+    <% @today_hiit_for_user.each do |hiit| %>
+      <table class="today-task-table">
+        <tr>
+          <th>
+            <span><%= link_to hiit.name, hiit_path(hiit) %></span>
+            <i>
+              <% if user_signed_in? && @user.id == current_user.id %>
+                <%= link_to "実施記録を更新する", hiit_user_hiits_path(hiit), method: :post %>
+              <% end %>
+              <% if UserHiit.exists?(hiit_id: hiit.id, user_id: @user.id, done_dates: Date.today) %>
+                実施済み!!
+              <% else %>
+                未実施
+              <% end %>
+            </i>
+          </th>
+        </tr>
+        <tr>
+        <td colspan="2"><%= "1種目あたりの時間：#{hiit.active_time}/" %><%= "休憩時間：#{hiit.rest_time}" %></td>
+        <tr>
+          <td colspan="2">
+            <div class="today-menus-container">
+              <% hiit.menu_hiits.length.times do |i| %>
+                <div class="today-menu-container">
+                  <div class="menu-number"><%= "#{i + 1}種目目" %></div>
+                  <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
+                    <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "100x100") %>
+                    <%= "#{hiit.menu_hiits[i].menu.name}" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% else %>
+    <div>本日の予定はありません</div>
+  <% end %>
+</main>

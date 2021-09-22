@@ -1,23 +1,26 @@
-<%= render "shared/error_messages", model: @menu %>
-<div class="menu-detail">
-  <%= form_with model: @menu, local: true do |f| %>
-  <div>
-    <%= f.label :name, "メニューの名前" %>
-    <%= f.text_field :name %>
+<main>
+  <%= render "shared/error_messages", model: @menu %>
+  <div class="menu-detail">
+    <%= form_with model: @menu, local: true do |f| %>
+    <div class="form-title">
+      <%= f.label :name, "メニューの名前" %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="form-title">
+      <%= f.label :icon, "メニューのアイコン" %>
+      <%= f.file_field :icon %>
+    </div>
+    <div id="preview-container">
+    </div>
+    <div class="form-title">
+      <%= f.label :text, "メニューの説明文" %>
+      <%= f.text_area :text %>
+    </div>
+    <div>
+      <%= f.submit "メニューを登録する", class:"btn" %>
+      <div class="link-container">
+      <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+    </div>
+    <% end %>
   </div>
-  <div>
-    <%= f.label :icon, "メニューのアイコン" %>
-    <%= f.file_field :icon %>
-  </div>
-  <div id="preview-container">
-  </div>
-  <div>
-    <%= f.label :text, "メニューの説明文" %>
-    <%= f.text_area :text %>
-  </div>
-  <div>
-    <%= f.submit "メニューを登録する" %>
-    <%= link_to "チームのページに戻る", team_path(current_user.team) %>
-  </div>
-  <% end %>
-</div>
+</main>

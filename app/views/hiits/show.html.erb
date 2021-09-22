@@ -1,62 +1,84 @@
 <main>
-  <div><%= "#{@hiit.name}の詳細ページです" %></div>
-  <div>
-    <%= "1セットあたりの時間：#{@hiit.active_time}" %>
-    <%= "セット間の休憩時間：#{@hiit.rest_time}" %>
-  </div>
-  <div>
-    <div>このHIITを行う曜日</div>
-    <% 7.times do |i| %>
-      <% if @wday_list.include?(i) %>
-        <div><%= Wday.find(i).name %></div>
-      <% end %>
+  <% if @messages.any? %>
+    <% @messages.each do |message| %>
+      <div class="error-message">
+        <%= message %>
+      </div>
     <% end %>
+  <% end %>
+  <div class="hiit-show-title"><span><%= link_to @hiit.name, hiit_path(@hiit) %></span>の詳細ページです</div>
+  <div class="hiit-show-hiit-abstract">
+    <%= "1セットあたりの時間：#{@hiit.active_time}" %>
+    <%= " ／ セット間の休憩時間：#{@hiit.rest_time}" %>
   </div>
   <div>
-    <div>このHIITで行う種目</div>
+    <div class="hiit-dates-container-title">
+      このHIITを行う曜日
+      <% 7.times do |i| %>
+        <% if @wday_list.include?(i) %>
+          <span><%= Wday.find(i).name %> </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <div class="menu-containers-title">このHIITで行う種目</div>
+    <div class="menu-containers">
     <% @menus.length.times do |i|%>
-      <div>
+      <div class="each-menu-container">
         <%= "#{(i + 1)}種目目" %>
       <%= link_to menu_path(@menus[i]) do %>
-        <%= image_tag @menus[i].icon.variant(resize: "50x50") %>
+        <%= image_tag @menus[i].icon.variant(resize: "100x100") %>
         <%= @menus[i].name %>
       <% end %>
       </div>
     <% end %>
-  </div>
-  <div>
-    <div>
-      <div>
-        <div>このHIITを登録しているグループ</div>
-        <% if @hiit.groups.any? %>
-          <% @hiit.groups.each do |group| %>
-            <div><%= link_to group.name, group_path(group) %></div>
-            <% if group.user_groups.any? %>
-              <% group.user_groups.each do |user_group| %>
-                <% if user_signed_in? && current_user.id == user_group.user.id %>
-                  <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
-                <% elsif user_signed_in? && current_user.admin? %>
-                  <div><%= link_to user_group.user.name, detail_user_path(user_group.user) %></div>
-                <% elsif user_signed_in? %>
-                  <div><%= user_group.user.name %></div>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit) %>
     </div>
   </div>
+  <table class="hiit-show-table">
+    <tr class="hiit-group-title">
+      <th class="title-th" colspan="2">このHIITを登録しているグループ</th>
+    </tr>
+    <tr>
+      <th class="group-name-th">グループ名</th>
+      <th class="group-name-th">選手名</th>
+    </tr>
+    <% if @hiit.group != nil %>
+    <% group = @hiit.group %>
+      <tr>
+        <th class="group-name-th"><%= link_to group.name, group_path(group) %></th>
+        <% if group.user_groups.any? %>
+          <td>
+            <% group.user_groups.each do |user_group| %>
+              <% if user_signed_in? && current_user.id == user_group.user.id %>
+                <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
+              <% elsif user_signed_in? && current_user.admin? %>
+                <div><%= link_to user_group.user.name, detail_user_path(user_group.user) %></div>
+              <% elsif user_signed_in? %>
+                <div><%= user_group.user.name %></div>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% else %>
+      <tr>
+        <td>このHIITに取り組んでいるグループはありません</td>
+      </tr>
+    <% end %>
+  </table>
+  <% if user_signed_in? && current_user.admin? && @hiit.group == nil %>
+    <div class="link-container">
+      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit) %>
+    </div>  
+  <% end %>
   <div class="link-container">
     <% if user_signed_in? && current_user.admin? %>
       <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>
       <%= link_to "HIITを削除する", hiit_path(@hiit), method: :delete %>
       <%= link_to "HIITを作成する", new_hiit_path %>
-      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
-    <% elsif user_signed_in? %>
-      <%= link_to "自分のページに戻る", root_path %>
-      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
     <% end %>
+      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
+      <%= link_to "自分のページに戻る", root_path %>
   </div>
 </main>

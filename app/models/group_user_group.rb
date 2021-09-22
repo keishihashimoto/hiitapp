@@ -38,7 +38,6 @@ class GroupUserGroup
     end
 
     related_user_groups.each do |related_user_group|
-      binding.pry
       unless user_ids.include?(related_user_group.user_id.to_s)
         related_user_group.destroy
       end

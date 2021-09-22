@@ -3,23 +3,24 @@
   <div class="menu-detail">
     <%= form_with model: @hiit_menu_hiit, url: "/hiits/#{@hiit.id}", method: :patch, local: true do |f| %>
     <div>
-      <%= f.label "HIITの名前",:name %>
+      <%= f.label :name, "HIITの名前" %>
       <%= f.text_field :name %>
     </div>
     <div>
-      <%= f.label "ひと種目あたりの時間",:active_time %><i>(「（半角数字）秒」または「（半角数字）分」という形で入力してください)</i>
+      <%= f.label :active_time, "1種目あたりの時間" %><i>(「（半角数字）秒または分」という形で入力してください)</i>
       <%= f.text_field :active_time %>
     </div>
     <div>
-      <%= f.label "休憩時間",:rest_time %><i>(「（半角数字）秒」または「（半角数字）分」という形で入力してください)</i>
+      <%= f.label :rest_time, "休憩時間" %><i>(「（半角数字）秒または分」という形で入力してください)</i>
       <%= f.text_field :rest_time %>
     </div>
     <div>
-      <%= f.label "実施日",:date %><i>(このHIITを実施する曜日に全てチェックを入れてください)</i><br>
+      <%= f.label :date, "実施日" %><i>(このHIITを実施する曜日に全てチェックを入れてください)</i><br>
       <div class="day-container">
       <%= f.collection_check_boxes(:date, Wday.all, :id, :name, include_hidden: false, name: "hiit_menu_hiit[date][]") %>
       </div>
     </div>
+    <div>このHIITで行う種目を選択してください</div>
     <div>
       <% 8.times do |i| %>
         <div>
@@ -33,8 +34,8 @@
       <% end %>
     </div>
     <div>
-      <%= f.submit "HIITを編集する" %>
-      <div>
+      <%= f.submit "HIITを編集する",class:"btn" %>
+      <div class="lower-link">
         <%= link_to "HIITのページに戻る", hiit_path(@hiit) %>
         <%= link_to "チームのページに戻る", team_path(current_user.team) %>
       </div>
