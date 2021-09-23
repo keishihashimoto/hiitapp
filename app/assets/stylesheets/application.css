@@ -679,3 +679,19 @@ main{
 footer {
   box-shadow: 0 -2px 4px rgba(0,0,0,.075);
 }
+
+.img-gray{
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.img-black{
+  -webkit-filter: black(70%);
+  -moz-filter: black(70%);
+  -ms-filter: black(70%);
+  -o-filter: black(70%);
+  filter: black(70%);
+}

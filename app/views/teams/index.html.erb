@@ -75,6 +75,41 @@
   <% end %>
 
   <% unless user_signed_in? %>
-    <%= image_tag "benchpress.jpg", class:"img-fluid" %>
+    <div class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <%= image_tag "benchpress.jpg", class:"img-fluid img-gray" %>
+          <div class="carousel-caption fs-4 text-light" style="bottom: 0.25rem;">より強く</div>
+        </div>
+        <div class="carousel-item">
+          <%= image_tag "running.jpg", class:"img-fluid img-gray" %>
+          <div class="carousel-caption fs-4 text-light" style="bottom: 0.25rem;">より軽やかに</div>
+        </div>
+        <div class="carousel-item">
+          <%= image_tag "crossfit.jpg", class:"img-fluid img-black" %>
+          <div class="carousel-caption fs-4 text-light" style="bottom: 0.25rem;">今よりも上を目指すすべての人へ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 container">
+      <div class="text-center mb-3">さあ、今すぐ始めよう</div>
+      <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col mb-3">
+          <div class="card">
+            <div class="card-header text-center">指導者の方</div>
+              <%= image_tag "team.jpg", class:"card-img" %>
+              <%= link_to "チームを登録する",new_team_path, class:"d-block btn btn-link text-secondary text-center mb-0" %>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="card">
+            <div class="card-header text-center">選手の方</div>
+              <%= image_tag "player.jpg", class:"card-img" %>
+              <%= link_to "ユーザー登録をする",new_user_registration_path, class:"d-block btn btn-link text-secondary text-center mb-0" %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
 </main>
