@@ -1,13 +1,13 @@
 <%- if controller_name != 'sessions' %>
-  <button class="form-control text-secondary mt-3"><%= link_to "ログインする", new_session_path(resource_name),class:"btn text-secondary mb-0 p-0" %><br /></button>
+  <button class="form-control text-secondary mt-3 bg-light"><%= link_to "ログインする", new_session_path(resource_name),class:"btn text-secondary mb-0 p-0" %><br /></button>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <button class="form-control my-3 bg-light"><%= link_to "ユーザー情報を新規登録する", new_registration_path(resource_name), class:"btn text-secondary p-0 mb-0" %><br /></button>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+  <button class="form-control bg-light"><%= link_to "パスワードをお忘れの場合はこちら", new_password_path(resource_name), class:"btn text-secondary p-0 mb-0" %><br /></button>
 <% end %>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
