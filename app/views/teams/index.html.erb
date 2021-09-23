@@ -3,7 +3,7 @@
     <h1 class="shared-title"><%= current_user.name %>さんの今週の予定です</h1>
     <div class="weekly-menu-container">
       <% 7.times do |i| %>
-        <div class="daily-menu-container">
+        <div class="daily-menu-container rounded">
           <div class="container-except-today">
             <div class="date-container">
               <%= "#{(Date.today - 3 + i).strftime('%m/%d')}" %>
@@ -38,7 +38,7 @@
                     <% else %>
                       ❌
                     <% end %>
-                    <%= link_to that_day_hiit_for_current_user[3].name, hiit_path(that_day_hiit_for_current_user[3]) %> ...
+                    <%= link_to that_day_hiit_for_current_user[3].name, hiit_path(that_day_hiit_for_current_user[3]),class:"btn btn-link text-secondary mb-0" %> ...
                   </div>
               <% elsif @hiit_for_current_user.any? %>
                 <% @hiit_for_current_user.each do |hiit_for_current_user| %>
@@ -49,7 +49,7 @@
                       <% else %>
                         ❌
                       <% end %>
-                      <%= link_to hiit_for_current_user.name, hiit_path(hiit_for_current_user) %>
+                      <%= link_to hiit_for_current_user.name, hiit_path(hiit_for_current_user),class:"btn btn-link text-secondary mb-0" %>
                     </div>
                   <% end %>
                 <% end %>
@@ -58,7 +58,7 @@
           </div>
           <% if i == 3 %>
             <div class="link-to-today">
-              <%= link_to "今日の予定を見る", user_user_hiits_path(current_user) %>
+              <%= link_to "今日の予定を見る", user_user_hiits_path(current_user),class:"btn btn-link text-secondary mb-0 px-1" %>
             </div>
 
           <% end %>
@@ -68,9 +68,9 @@
   <% end %>
   <% if user_signed_in? && current_user.admin? %>
     <div class="link-container">
-      <%= link_to "メニューを作成する", new_menu_path %>
-      <%= link_to "HIITを作成する", new_hiit_path %>
-      <%= link_to "グループを作成する", new_group_path %>
+      <%= link_to "メニューを作成する", new_menu_path, class:"text-secondary" %>
+      <%= link_to "HIITを作成する", new_hiit_path, class:"text-secondary" %>
+      <%= link_to "グループを作成する", new_group_path, class:"text-secondary" %>
     </div>
   <% end %>
 
