@@ -1,0 +1,14 @@
+{
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  },
+  "emmet.triggerExpansionOnTab": true
+
+  "emmet.includeLanguages": {
+    "erb": "html"
+}
+  
+}

@@ -59,12 +59,16 @@ class TeamsController < ApplicationController
   def create_default_menu
     menu1 = Menu.create(name: "腕立て伏せ", team_id: @team.id)
     menu1.icon.attach(io: File.open(Rails.root.join("app/assets/images/pushup.png")), filename: "pushup.png")
+    menu1.save
     menu2 = Menu.create(name: "スクワット", team_id: @team.id)
     menu2.icon.attach(io: File.open(Rails.root.join("app/assets/images/squat.png")), filename: "squat.png")
+    menu2.save
     menu3 = Menu.create(name: "プランク", team_id: @team.id)
     menu3.icon.attach(io: File.open(Rails.root.join("app/assets/images/frontbridge.png")), filename: "frontbridge.png")
+    menu3.save
     menu4 = Menu.create(name: "懸垂", team_id: @team.id)
     menu4.icon.attach(io: File.open(Rails.root.join("app/assets/images/pullup.png")), filename: "pullup.png")
+    menu4.save
   end
 
 end

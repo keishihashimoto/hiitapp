@@ -1,4 +1,73 @@
 <main>
+
+  <div class="alert alert-secondary rounded-0 text-center">チーム情報のページです</div>
+
+  <div class="card">
+    <div class="d-flex justify-content-between align-items-center py-2">
+      <div class="ps-4">チーム名</div>
+      <div class="d-flex justify-content-between">
+        <div class="px-2"><%= link_to @team.name, team_path(@team), class:"btn btn-link text-secondary mb-0" %></div>
+        <% if user_signed_in? && current_user.admin? %>
+          <div class="px-2"><%= link_to "変更する", edit_team_path(@team), class:"btn btn-link text-secondary mb-0" %></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="accordion" id="accordion_1">
+      <div class="accordion-item">
+        <div class="accordion-header" id="headding1_1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1_1" aria-expanded="true" aria-controls="collapse1_1">
+            選手・グループ一覧
+          </button>
+        </div>
+        <div id="collapse1_1" class="accordion-collapse collapse show" aria-labelledby="heading1_1" data-bs-parent="accordion_1">
+          <div class="accordion-body container">
+            <div class="row">
+              <div class="col-4">選手名</div>
+              <div class="col-8">グループ名</div>
+            </div>
+            <% if user_signed_in? && current_user.admin? %>
+              <% @team.users.each do |user| %>
+                <div class="row">
+                  <div class="col-4"><%= link_to user.name, detail_user_path(user), class:"btn text-secondary mb-0 ps-0" %></div>
+                  <div class="col-8">
+                    <% if user.user_groups.any? %>
+                      <% user.user_groups.each do |user_group| %>
+                        <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0 ps-0" %></div>
+                      <% end %>
+                    <% else %>
+                      この選手が所属しているグループはありません
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% else user_signed_in? %>
+              <% @team.users.each do |user| %>
+                <div class="row">
+                  <% if user.id == current_user.id %>
+                    <div class="col-4"><%= link_to user.name, detail_user_path(user), class:"btn text-secondary mb-0 ps-0" %></div>
+                  <% else %>
+                    <div class="col-4"><%= user.name %></div>
+                  <% end %>
+                  <div class="col-8">
+                    <% if user.user_groups.any? %>
+                      <% user.user_groups.each do |user_group| %>
+                        <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0 ps-0" %></div>
+                      <% end %>
+                    <% else %>
+                      この選手が所属しているグループはありません
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
   <table class="team-show-table">
   <tr class="team-show-key-tr">
     <th>
