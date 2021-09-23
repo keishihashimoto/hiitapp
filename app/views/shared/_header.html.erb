@@ -1,35 +1,35 @@
-<div class="header-logo">
-  <%= link_to "HiitApp", root_path %>
+<div class="p-3 ps-5">
+  <%= link_to "HiitApp", root_path, class:"btn text-secondary fs-1" %>
 </div>
-<div class="header-side-menu">
+<div>
   <!--ユーザーがログインしているかどうかで表示内容を変更-->
   <% unless user_signed_in? %>
   <!--ログインしていない場合-->
-    <%= link_to "チームを登録する", new_team_path %>
-    <%= link_to "ユーザーを登録する", new_user_registration_path %>
-    <%= link_to "ログインする", new_user_session_path %>
+    <%= link_to "チームを登録する", new_team_path, class:"btn text-secondary" %>
+    <%= link_to "ユーザーを登録する", new_user_registration_path, class:"btn text-secondary" %>
+    <%= link_to "ログインする", new_user_session_path, class:"btn text-secondary" %>
   <!--ログインしている場合の表示-->
   <% else %>
     <div class="team-user-container">
       <div class="team">
-        <%= link_to current_user.team.name, team_path(current_user.team) %>
+        <%= link_to current_user.team.name, team_path(current_user.team), class:"btn text-secondary" %>
       </div>
       <div class="user">
-        <%= link_to current_user.name, user_path(current_user) %>
+        <%= link_to current_user.name, user_path(current_user), class:"btn text-secondary" %>
       </div>
       <div class="logout">
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn text-secondary" %>
       </div>
     </div>
     <div class="group">
       <% if current_user.user_groups.any? %>
         <% if current_user.user_groups.length <= 4 %>
           <% current_user.user_groups.each do |user_group| %>
-            <%= link_to user_group.group.name, group_path(user_group.group) %>
+            <%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary" %>
           <% end %>
         <% else %>
           <% 4.times do |i| %>
-            <%= link_to current_user.user_groups[i].group.name, group_path(current_user.user_groups[i].group) %>
+            <%= link_to current_user.user_groups[i].group.name, group_path(current_user.user_groups[i].group), class:"btn text-secondary" %>
           <% end %>
           <span>...</span>
         <% end %>

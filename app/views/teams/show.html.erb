@@ -6,9 +6,9 @@
     <div class="d-flex justify-content-between align-items-center py-2">
       <div class="ps-4">チーム名</div>
       <div class="d-flex justify-content-between">
-        <div class="px-2"><%= link_to @team.name, team_path(@team), class:"btn btn-link text-secondary mb-0" %></div>
+        <div class="px-2"><%= link_to @team.name, team_path(@team), class:"btn text-secondary mb-0" %></div>
         <% if user_signed_in? && current_user.admin? %>
-          <div class="px-2"><%= link_to "変更する", edit_team_path(@team), class:"btn btn-link text-secondary mb-0" %></div>
+          <div class="px-2"><%= link_to "変更する", edit_team_path(@team), class:"btn text-secondary mb-0" %></div>
         <% end %>
       </div>
     </div>
@@ -22,17 +22,17 @@
         <div id="collapse1_1" class="accordion-collapse collapse show" aria-labelledby="heading1_1" data-bs-parent="accordion_1">
           <div class="accordion-body container pb-0">
             <div class="row">
-              <div class="col-4">選手名</div>
-              <div class="col-8">グループ名</div>
+              <div class="col-4" style="padding-left: 24px">選手名</div>
+              <div class="col-8" style="padding-left: 24px">グループ名</div>
             </div>
             <% if user_signed_in? && current_user.admin? %>
               <% @team.users.each do |user| %>
                 <div class="row">
-                  <div class="col-4"><%= link_to user.name, detail_user_path(user), class:"btn text-secondary mb-0 ps-0" %></div>
+                  <div class="col-4"><%= link_to user.name, detail_user_path(user), class:"btn text-secondary mb-0" %></div>
                   <div class="col-8">
                     <% if user.user_groups.any? %>
                       <% user.user_groups.each do |user_group| %>
-                        <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0 ps-0" %></div>
+                        <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0" %></div>
                       <% end %>
                     <% else %>
                       <div style="padding: 6px 0;">所属しているグループはありません</div>
@@ -80,10 +80,10 @@
         <div id="collapse_2" class="accordion-collapse collapse" aria-labelledby="heading_2" data-bs-parent="#accordion_2">
           <div class="accordion-body container pb-0">
             <div class="row">
-              <div class="col-4">
+              <div class="col-4" style="padding-left: 24px;">
                 HIIT名
               </div>
-              <div class="col-8">
+              <div class="col-8" style="padding-left: 24px;">
                 HIITを行っているグループ名
               </div>
             </div>
@@ -91,18 +91,18 @@
               <% if @team.hiits.any? %>
                 <% @team.hiits.each do |hiit| %>
                   <div class="col-4">
-                    <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0 ps-0" %>
+                    <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0" %>
                   </div>
                   <div class="col-8">
-                    <% if hiit.group.any? %>
-                      <%= link_to group.name, group_path(group), class:"btn text-secondary mb-0 ps-0" %>
+                    <% if hiit.group != nil %>
+                      <%= link_to hiit.group.name, group_path(hiit.group), class:"btn text-secondary mb-0" %>
                     <% else %>
                       このHIITに取り組んでいるグループはありません
                     <% end %>
                   </div>
                 <% end %>
               <% else %>
-                <div class="col-12" style="padding: 6px 12px;">現在登録されているHIITはありません</div>
+                <div class="col-12" style="padding: 6px 24px;">現在登録されているHIITはありません</div>
               <% end %>
             </div>
             <% if user_signed_in? && current_user.admin? %>
