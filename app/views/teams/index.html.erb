@@ -1,6 +1,6 @@
 <main>
   <% if user_signed_in? %>
-    <h1 class="shared-title"><%= current_user.name %>さんのマイページです</h1>
+    <h1 class="shared-title"><%= current_user.name %>さんの今週の予定です</h1>
     <div class="weekly-menu-container">
       <% 7.times do |i| %>
         <div class="daily-menu-container">

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :home, only: :index
   devise_for :users
   get root to: "teams#index"
   resources :teams, except: :destroy
