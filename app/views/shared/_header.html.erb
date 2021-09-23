@@ -5,31 +5,31 @@
   <!--ユーザーがログインしているかどうかで表示内容を変更-->
   <% unless user_signed_in? %>
   <!--ログインしていない場合-->
-    <%= link_to "チームを登録する", new_team_path, class:"btn text-secondary" %>
-    <%= link_to "ユーザーを登録する", new_user_registration_path, class:"btn text-secondary" %>
-    <%= link_to "ログインする", new_user_session_path, class:"btn text-secondary" %>
+    <%= link_to "チームを登録する", new_team_path, class:"btn text-secondary mb-0" %>
+    <%= link_to "ユーザーを登録する", new_user_registration_path, class:"btn text-secondary mb-0" %>
+    <%= link_to "ログインする", new_user_session_path, class:"btn text-secondary mb-0" %>
   <!--ログインしている場合の表示-->
   <% else %>
     <div class="team-user-container">
-      <div class="team">
-        <%= link_to current_user.team.name, team_path(current_user.team), class:"btn text-secondary" %>
+      <div class="d-none d-sm-block">
+        <%= link_to current_user.team.name, team_path(current_user.team), class:"btn text-secondary mb-0" %>
       </div>
-      <div class="user">
-        <%= link_to current_user.name, user_path(current_user), class:"btn text-secondary" %>
+      <div>
+        <%= link_to current_user.name, user_path(current_user), class:"btn text-secondary mb-0" %>
       </div>
-      <div class="logout">
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn text-secondary" %>
+      <div>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn text-secondary mb-0" %>
       </div>
     </div>
-    <div class="group">
+    <div class="d-none d-sm-block">
       <% if current_user.user_groups.any? %>
         <% if current_user.user_groups.length <= 4 %>
           <% current_user.user_groups.each do |user_group| %>
-            <%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary" %>
+            <%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0" %>
           <% end %>
         <% else %>
           <% 4.times do |i| %>
-            <%= link_to current_user.user_groups[i].group.name, group_path(current_user.user_groups[i].group), class:"btn text-secondary" %>
+            <%= link_to current_user.user_groups[i].group.name, group_path(current_user.user_groups[i].group), class:"btn text-secondary mb-0" %>
           <% end %>
           <span>...</span>
         <% end %>

@@ -671,3 +671,11 @@ th{
 
 
 /* bootstrap導入後に記述 */
+main{
+  height: calc(100vh - 180px);
+  overflow: scroll;
+}
+
+footer {
+  box-shadow: 0 -2px 4px rgba(0,0,0,.075);
+}
