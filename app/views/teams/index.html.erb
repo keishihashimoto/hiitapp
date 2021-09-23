@@ -73,4 +73,8 @@
       <%= link_to "グループを作成する", new_group_path %>
     </div>
   <% end %>
+
+  <% unless user_signed_in? %>
+    <%= image_tag "benchpress.jpg", class:"img-fluid" %>
+  <% end %>
 </main>
