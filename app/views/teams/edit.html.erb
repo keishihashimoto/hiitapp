@@ -1,13 +1,23 @@
-<main class="team-main">
+<main class="container mx-md-auto" style="max-width: 788px;">
   <div class="error-messages-container">
     <%= render "shared/error_messages", model: @team %>
   </div>
-  <div class="team-main-title">
+  <div class="alert alert-secondary text-center rounded-0 border-0">
     チーム情報編集画面です
   </div>
-  <%= form_with model: @team, local: true do |f| %>
-    <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"team-name-field" %>
-    <%= f.submit "チーム情報を編集する", class:"team-new-btn" %>
+  <%= form_with model: @team,class:"form-group", local: true do |f| %>
+    <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"form-control" %>
+    <div class="container mt-2">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col d-flex justify-content-end align-items-center order-md-second">
+          <i class="far fa-edit fa-fw text-primary"></i>
+          <%= f.submit "チーム名を変更する", class:"btn btn-link mb-0 ps-0" %>
+        </div>
+        <div class="col d-flex justify-content-end justify-content-md-start align-items-center order-md-first">
+          <i class="fas fa-long-arrow-alt-left fa-fw text-secondary"></i>
+          <%= link_to "チーム詳細画面に戻る", team_path(@team), class:"btn btn-link text-secondary mb-0 ps-0" %>
+        </div>
+      </div>
+    </div>
   <% end %>
-  <%= link_to "チーム詳細画面に戻る", team_path(@team) %>
 </main>
