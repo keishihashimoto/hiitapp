@@ -20,7 +20,7 @@
           </button>
         </div>
         <div id="collapse1_1" class="accordion-collapse collapse show" aria-labelledby="heading1_1" data-bs-parent="accordion_1">
-          <div class="accordion-body container">
+          <div class="accordion-body container pb-0">
             <div class="row">
               <div class="col-4">選手名</div>
               <div class="col-8">グループ名</div>
@@ -35,7 +35,7 @@
                         <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0 ps-0" %></div>
                       <% end %>
                     <% else %>
-                      この選手が所属しているグループはありません
+                      <div style="padding: 6px 0;">所属しているグループはありません</div>
                     <% end %>
                   </div>
                 </div>
@@ -54,125 +54,102 @@
                         <span><%= link_to user_group.group.name, group_path(user_group.group), class:"btn text-secondary mb-0 ps-0" %></div>
                       <% end %>
                     <% else %>
-                      この選手が所属しているグループはありません
+                      <div style="padding: 6px 0;">所属しているグループはありません</div>
                     <% end %>
                   </div>
                 </div>
               <% end %>
             <% end %>
+            <% if user_signed_in? && current_user.admin? %>
+              <div class="d-flex justify-content-end border-top boder-secondary">
+                <%= link_to "グループを作成する",new_group_path, class:"d-block btn text-secondary mb-0" %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  
-
-  <table class="team-show-table">
-  <tr class="team-show-key-tr">
-    <th>
-      <%= link_to @team.name, team_path(@team) %>
-    </th>
-    <td class="border-on">
-    <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "チーム名を変更する", edit_team_path(@team), class:"team-name-submit" %>
-    <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th>選手・グループ一覧</th>
-    <td class="border-on">
-      <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "新しいグループを作成する", new_group_path %>
-      <% end %>
-    </th>
-  </tr>
-    <% if user_signed_in? && current_user.admin? %>
-      <% @team.users.each do |user| %>
-        <tr>
-          <th class="team-show-key-th name-th"><%= link_to user.name, detail_user_path(user) %></th>
-          <td class="border-on flex-td">
-            <% if user.user_groups.any? %>
-              <% user.user_groups.each do |user_group| %>
-                  <%= link_to user_group.group.name, group_path(user_group.group) %>
-              <% end %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    <% elsif user_signed_in? && !(current_user.admin?) %>
-      <% @team.users.each do |user| %>
-        <% if current_user.id == user.id %>
-          <tr>
-            <th class="team-show-key-th name-th"><%= link_to user.name, root_path %></th>
-            <td class="border-on">
-              <% if user.user_groups.any? %>
-                <% user.user_groups.each do |user_group| %>
-                  <%= link_to user_group.group.name, group_path(user_group.group) %>
+    <div class="accordion" id="accordion_2">
+      <div class="accordion-item">
+        <div class="accordion-header" id="heading_2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_2" aria-expanded="false" aria-controls="collapse_2">
+            HIIT一覧
+          </button>
+        </div>
+        <div id="collapse_2" class="accordion-collapse collapse" aria-labelledby="heading_2" data-bs-parent="#accordion_2">
+          <div class="accordion-body container pb-0">
+            <div class="row">
+              <div class="col-4">
+                HIIT名
+              </div>
+              <div class="col-8">
+                HIITを行っているグループ名
+              </div>
+            </div>
+            <div class="row">
+              <% if @team.hiits.any? %>
+                <% @team.hiits.each do |hiit| %>
+                  <div class="col-4">
+                    <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0 ps-0" %>
+                  </div>
+                  <div class="col-8">
+                    <% if hiit.group.any? %>
+                      <%= link_to group.name, group_path(group), class:"btn text-secondary mb-0 ps-0" %>
+                    <% else %>
+                      このHIITに取り組んでいるグループはありません
+                    <% end %>
+                  </div>
                 <% end %>
+              <% else %>
+                <div class="col-12" style="padding: 6px 12px;">現在登録されているHIITはありません</div>
               <% end %>
-            </td>
-          </tr>
-        <% else %>
-          <tr>
-            <th class="team-show-key-th name-th"><%= user.name %></th>
-            <td class="border-on">
-              <% if user.user_groups.any? %>
-                <% user.user_groups.each do |user_group| %>
-                  <%= link_to user_group.group.name, group_path(user_group.group) %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-    <% end %>
-  <tr class="team-show-key-tr-sub">
-    <th class="team-show-key-th">登録されているHIIT一覧</th>
-    <td class="border-on">
-      <% if current_user.admin? %>
-      <%= link_to "新しいHIITを登録する", new_hiit_path %>
-      <% end %>
-    </td>
-  </tr>
-    <% @team.hiits.each do |hiit| %>
-      <tr>
-        <th class="hiit-thread name-th">
-          <%= link_to hiit.name, hiit_path(hiit), class:"menu-name" %>
-        </th>
-        <td class="hiit-group-td">
-          <% if hiit.group != nil %>
-            <%= link_to hiit.group.name, group_path(hiit.group) %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-  <table class="team-show-table-second">
-  <tr class="team-show-key-tr-sub">
-    <th class="team-show-key-th">
-      <div>登録されているメニュー一覧</div>
-      <% if current_user.admin? %>
-        <span class="make-thin"><%= link_to "新しいメニューを登録する", new_menu_path %></span>
-      <% end %>
-    </th>
-  </tr>
-  <tr>
-    <td class="menu-td">
-      <div class="menu-containers">
-        <% @team.menus.each do |menu| %>
-          <div class="each-menu-container">
-            <div></div>
-            <%= link_to menu_path(menu) do %>
-              <% if menu.icon.attached? %>
-                <%= image_tag menu.icon.variant(resize: "100x100"), class:"menu-icon" %>
-              <% end %>
-                <%= menu.name %>
+            </div>
+            <% if user_signed_in? && current_user.admin? %>
+              <div class="d-flex justify-content-end border-top boder-secondary">
+                <%= link_to "HIITを作成する",new_hiit_path, class:"d-block btn text-secondary mb-0" %>
+              </div>
             <% end %>
           </div>
-        <% end %>
+        </div>
       </div>
-    </td>
-  </tr>
-  </table>
+    </div>
+
+    <div class="accordion" id="accordion_3">
+      <div class="accordion-item">
+        <div class="accordion-header" id="heading_3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_3" aria-expanded="false" aria-controls="collapse_3">
+            メニュー一覧
+          </button>
+        </div>
+        <div id="collapse_3" class="accordion-collapse collapse" aria-labelledby="heading_3" data-bs-parent="#accordion_3">
+          <div class="accordion-body container pb-0">
+            <div class="d-flex flex-wrap">
+              <% if @team.menus.any? %>
+                <% @team.menus.each do |menu| %>
+                  <%= link_to menu_path(menu), class:"btn" do %>
+                    <div class="card shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center" style="width: 110px; height: 110px;">
+                        <%= image_tag menu.icon.variant(resize: "100 x 100")%>
+                      </div>
+                      <div class="text-center card-header text-secondary"><%= menu.name %></div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% else %>
+                登録されているメニューはありません
+              <% end %>
+            </div>
+            <% if user_signed_in? && current_user.admin? %>
+              <div class="d-flex justify-content-end border-top boder-secondary">
+                <%= link_to "メニューを作成する",new_menu_path, class:"d-block btn text-secondary mb-0" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </main>
