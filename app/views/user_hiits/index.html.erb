@@ -40,7 +40,13 @@
     <div class="alert alert-secondary rounded-0 border-0">本日の予定はありません</div>
   <% end %>
 
-
+  <div class="link-container">
+    <%= link_to "自分のページに戻る", user_path(current_user), class:"btn text-secondary mb-0" %>
+    <%= link_to "チームのページに戻る", team_path(current_user.team), class:"btn text-secondary mb-0" %>
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "この選手のページに戻る", detail_user_path(@user), class:"btn text-secondary mb-0" %>
+    <% end %>
+  </div>
 
 </main>
 
