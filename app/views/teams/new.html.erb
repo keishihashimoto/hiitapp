@@ -8,7 +8,7 @@
   <%= form_with model: @team, class:"form-group", local: true do |f| %>
     <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"form-control" %>
     <div class="d-flex justify-content-end">
-      <%= f.submit "チームを登録する", class:"btn btn-link" %>
+      <%= f.submit "チームを登録する", class:"form-control text-secondary mt-3" %>
     </div>
   <% end %>
 </main>
