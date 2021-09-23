@@ -1,12 +1,14 @@
-<main class="team-main">
+<main class="container mx-md-auto" style="max-width: 788px;">
   <div class="error-messages-container">
     <%= render "shared/error_messages", model: @team %>
   </div>
-  <div class="team-main-title">
+  <div class="alert alert-secondary text-center rounded-0 border-0">
     チーム登録画面です
   </div>
-  <%= form_with model: @team, local: true do |f| %>
-    <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"team-name-field" %>
-    <%= f.submit "チームを登録する", class:"team-new-btn" %>
+  <%= form_with model: @team,class:"form-group", local: true do |f| %>
+    <%= f.text_field :name, placeholder: "チーム名を入力してください", class:"form-control" %>
+    <div class="d-flex justify-content-end">
+      <%= f.submit "チームを登録する", class:"btn btn-link" %>
+    </div>
   <% end %>
 </main>
