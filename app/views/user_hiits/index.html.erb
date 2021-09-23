@@ -1,43 +1,46 @@
 <main>
-  <h1><%= link_to @user.name, user_path(@user) %>さんの本日の予定です</h1>
+  <h1 class="shared-title mx-0"><%= link_to @user.name, user_path(@user), class:"text-dark text-decoration-none" %>さんの本日の予定</h1>
+
   <% if @today_hiit_for_user.any? %>
     <% @today_hiit_for_user.each do |hiit| %>
-      <table class="today-task-table">
-        <tr>
-          <th>
-            <span><%= link_to hiit.name, hiit_path(hiit) %></span>
-            <i>
-              <% if user_signed_in? && @user.id == current_user.id %>
-                <%= link_to "実施記録を更新する", hiit_user_hiits_path(hiit), method: :post %>
-              <% end %>
-              <% if UserHiit.exists?(hiit_id: hiit.id, user_id: @user.id, done_dates: Date.today) %>
-                実施済み!!
-              <% else %>
-                未実施
-              <% end %>
-            </i>
-          </th>
-        </tr>
-        <tr>
-        <td colspan="2"><%= "1種目あたりの時間：#{hiit.active_time}/" %><%= "休憩時間：#{hiit.rest_time}" %></td>
-        <tr>
-          <td colspan="2">
-            <div class="today-menus-container">
-              <% hiit.menu_hiits.length.times do |i| %>
-                <div class="today-menu-container">
-                  <div class="menu-number"><%= "#{i + 1}種目目" %></div>
-                  <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
-                    <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "100x100") %>
-                    <%= "#{hiit.menu_hiits[i].menu.name}" %>
-                  <% end %>
-                </div>
+      <div class="card shadow-sm container">
+        <div class="card-header row row-cols-1 row-cols-sm-2">
+          <div class="col text-center">
+            <% if UserHiit.exists?(hiit_id: hiit.id, user_id: @user.id, done_dates: Date.today) %>
+              <span class="badge bg-dark">実施済み!!</span>
+            <% else %>
+              <span class="badge bg-dark">未実施</span>
+            <% end %>
+            <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0 fs-3" %>
+          </div>
+          <div class="col d-flex justify-content-around align-items-center">
+            <% if user_signed_in? && @user.id == current_user.id %>
+              <%= link_to "更新する", hiit_user_hiits_path(hiit), method: :post, class:"btn text-secondary mb-0 p-0" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 border-bottom border-bottom-light mb-2">
+          <div class="col text-center py-2">1種目あたりの時間：<%= hiit.active_time %></div>
+          <div class="col text-center py-2">休憩時間：<%= hiit.rest_time %></div>
+        </div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+          <% hiit.menu_hiits.length.times do |i| %>
+            <div class="cols">
+              <div class="menu-number"><%= "#{i + 1}種目目" %></div>
+              <%= link_to menu_path(hiit.menu_hiits[i].menu), class:"text-secondary btn mb-0" do %>
+                <%= image_tag hiit.menu_hiits[i].menu.icon, class:"img-fluid" %>
+                <%= "#{hiit.menu_hiits[i].menu.name}" %>
               <% end %>
             </div>
-          </td>
-        </tr>
-      </table>
+          <% end %>
+        </div>
+      </div>
     <% end %>
   <% else %>
-    <div>本日の予定はありません</div>
+    <div class="alert alert-secondary rounded-0 border-0">本日の予定はありません</div>
   <% end %>
+
+
+
 </main>
+

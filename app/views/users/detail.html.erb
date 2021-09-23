@@ -1,5 +1,5 @@
 <main>
-  <h1><%= @user.name %>のトレーニングメニュー</h1>
+  <h1 class="shared-title"><%= @user.name %>さんの今週の予定です</h1>
   <div class="weekly-menu-container">
     <% 7.times do |i| %>
       <div class="daily-menu-container">
@@ -38,7 +38,7 @@
                 <% else %>
                   ❌
                 <% end %>
-                <%= link_to that_day_hiit_for_user[3].name, hiit_path(that_day_hiit_for_user[3]) %> ...
+                <%= link_to that_day_hiit_for_user[3].name, hiit_path(that_day_hiit_for_user[3]),class:"btn btn-link text-secondary mb-0" %> ...
               </div>
           <% elsif @hiit_for_user.any? %>
             <% @hiit_for_user.each do |hiit_for_user| %>
@@ -49,7 +49,7 @@
                   <% else %>
                     ❌
                   <% end %>
-                  <%= link_to hiit_for_user.name, hiit_path(hiit_for_user) %>
+                  <%= link_to hiit_for_user.name, hiit_path(hiit_for_user),class:"btn btn-link text-secondary mb-0" %>
                 </div>
               <% end %>
             <% end %>
@@ -59,7 +59,7 @@
         </div>
         <% if i == 3 %>
           <div class="link-to-today">
-            <%= link_to "今日の予定を見る", user_user_hiits_path(@user) %>
+            <%= link_to "今日の予定を見る", user_user_hiits_path(@user),class:"btn btn-link text-secondary mb-0 px-1" %>
           </div>
         <% end %>
       </div>
@@ -67,8 +67,8 @@
   </div>
   <% if current_user.admin? %>
     <div class="link-container">
-      <%= link_to "#{@user.name}の詳細を見る", user_path(@user) %>
-      <%= link_to "チームのページに戻る", team_path(@team) %>
+      <%= link_to "#{@user.name}の詳細を見る", user_path(@user), class:"text-secondary" %>
+      <%= link_to "チームのページに戻る", team_path(@team), class:"text-secondary" %>
     </div>
   <% end %>
 </main>
