@@ -1,4 +1,5 @@
 <main>
+  <div class="text-center fs-3 bg-light py-2">グループの新規作成ページです</div>
   <%= render "shared/error_messages", model: @group_user_group %>
   <% if @messages.any? %>
     <% @messages.each do |message| %>
@@ -9,18 +10,18 @@
   <% end %>
   <div class="menu-detail">
     <%= form_with model: @group_user_group, url: groups_path, local: true do |f| %>
-    <div>
+    <div class="form-group">
       <%= f.label :name, "グループの名前" %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class:"form-control" %>
     </div>
     <div>
       <div >"このグループで取り組むHIIT"<i>（一つだけ選択してください）</i></div>
       <% if @enable_hiits.any? %>
         <% @enable_hiits.each do |hiit| %>
           <div>
-            <div>
-              <%= f.radio_button :hiit_id, hiit.id %>
-              <%= f.label :hiit_id, hiit.name %>
+            <div class="form-group form-check">
+              <%= f.radio_button :hiit_id, hiit.id, class:"form-check-label" %>
+              <%= f.label :hiit_id, hiit.name, class:"form-check-input" %>
               <%= hiit.active_time %>
               <%= hiit.rest_time %>
             </div>
@@ -49,16 +50,18 @@
         <div>現在利用可能なHIITはありません</div>
       <% end %>
     </div>
-    <div>
-      <%= f.label :user_ids, "このグループのメンバー" %>
-      <div class="member-container">
-      <%= f.collection_check_boxes(:user_ids, @users, :id, :name, include_hidden: false, name: "group_user_group[user_ids][]") %>
-      </div>
-    </div>
-    <div>
-      <%= f.submit "グループを登録する", class:"btn" %>
+    
+    <%= f.label :user_ids, "このグループのメンバー" %>
+    
+    <%= f.collection_check_boxes(:user_ids, @users, :id, :name, include_hidden: false, name: "group_user_group[user_ids][]") do |b| %>
+      <div class="form-check form-check-inline form-group"><%= b.label {b.check_box + b.text } %></div>
+    <% end %>
+      
+    
+    <div class="form-group">
+      <%= f.submit "グループを登録する", class:"btn form-control bg-light" %>
       <div class="lower-link">
-        <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+        <button class="form-control bg-light btn"><%= link_to "チームのページに戻る", team_path(current_user.team), class:"text-secondary m-0 btn" %>
       </div>
     </div>
     <% end %>

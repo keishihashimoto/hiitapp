@@ -1,4 +1,5 @@
 <main>
+  <div class="bg-light text-center fs-3 py-2">新しいHIITの作成画面です</div>
   <%= render "shared/error_messages", model: @hiit_menu_hiit %>
   <div class="menu-detail">
     <%= form_with model: @hiit_menu_hiit, url: hiits_path, local: true do |f| %>
@@ -35,7 +36,7 @@
     <div class="form-group">
       <%= f.submit "HIITを登録する", class:"btn form-control text-secondary bg-light" %>
       <div class="lower-link">
-        <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+        <button class="form-control btn bg-light"><%= link_to "チームのページに戻る", team_path(current_user.team), class:"text-secondary text-decoration-none m-0" %></div>
       </div>
     </div>
     <% end %>
