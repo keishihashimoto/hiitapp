@@ -2,31 +2,31 @@
   <div class="menu-detail">
     <%= render "shared/error_messages", model: @menu %>
     <%= form_with model: @menu, local: true do |f| %>
-    <div class="form-title">
+    <div class="form-title form-group">
       <%= f.label :name, "メニューの名前" %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class:"form-control" %>
     </div>
-    <div class="form-title">
+    <div class="form-title form-group">
       <%= f.label :icon, "メニューのアイコン" %>
-      <%= f.file_field :icon %>
+      <%= f.file_field :icon, class:"form-control" %>
     </div>
-    <div id="preview-container">
+    <div id="preview-container" class="d-flex justify-content-center">
       <%= image_tag @menu.icon %>
     </div>
-    <div class="form-title">
+    <div class="form-title form-group">
       <%= f.label :text, "メニューの説明文" %>
-      <%= f.text_area :text %>
+      <%= f.text_area :text, class:"form-control" %>
     </div>
     <div>
-      <div>
-        <%= f.submit "メニューを編集する" %>
+      <div class="form-group">
+        <%= f.submit "メニューを編集する", class:"form-control btn bg-light text-secondary" %>
       </div>
-      <div class="link-container">
+      <div class="link-container mx-0">
         <% if user_signed_in? && current_user.admin? %>
-          <%= link_to "メニューを削除する", menu_path(@menu), method: :delete %>
+          <%= link_to "メニューを削除する", menu_path(@menu), method: :delete, class:"btn text-secondary mb-0" %>
         <% end %>
-        <%= link_to "メニューのページに戻る", menu_path(@menu) %>
-        <%= link_to "新しいメニューを作成する", new_menu_path %>
+        <%= link_to "メニューのページに戻る", menu_path(@menu), class:"btn text-secondary mb-0" %>
+        <%= link_to "新しいメニューを作成する", new_menu_path, class:"btn text-secondary mb-0" %>
       </div>
     </div>
     <% end %>
