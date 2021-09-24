@@ -6,40 +6,48 @@
       </div>
     <% end %>
   <% end %>
-  <div class="menu-name-container">
-    <%= @menu.name %>
-  </div>
-  <div class="menu-icon-container">
-    <%= image_tag @menu.icon %>
-  </div>
-  <div class="menu-text-container">
-    <% if @menu.text != "" %>
-      <%= @menu.text %>
-    <% else %>
-      説明文は特にありません
-    <% end %>
-  </div>
-  <div class="related-hiit-container">
-    <p>このメニューが含まれているHIIT：</p>
-    <div>
-      <% @hiits.each do |hiit| %>
-        <%= link_to hiit.name, hiit_path(hiit) %>
-      <% end %>
-      <% unless @hiits.any? %>
-        このメニューが含まれているHIITはありません
-      <% end %>
+
+  <div class="card" style="max-width: 650px;">
+    <div class="card-header text-center fs-3">
+      <%= @menu.name %>
+    </div>
+    <div class="list-group list-group-flush">
+      <div class="d-flex align-items-center justify-content-center list-group-item">
+        <%= image_tag @menu.icon, class:"img-fluid" %>
+      </div>
+      <div class="list-group-item bg-light">
+        <% if @menu.text != "" %>
+          <%= @menu.text %>
+        <% else %>
+          説明文は特にありません
+        <% end %>
+      </div>
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>このメニューが含まれているHIIT：</div>
+        <div class="d-flex flex-wrap">
+          <% @hiits.each do |hiit| %>
+            <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0" %>
+          <% end %>
+          <% unless @hiits.any? %>
+            このメニューが含まれているHIITはありません
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="link-container">
+
+
+
+  <div class="link-container m-0 mt-3">
     <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "メニューを編集する", edit_menu_path(@menu) %>
-      <%= link_to "メニューを削除する", menu_path(@menu), method: :delete %>
-      <%= link_to "メニューを作成する", new_menu_path %>
-      <%= link_to "自分のページに戻る", root_path %>
-      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+      <%= link_to "メニューを編集する", edit_menu_path(@menu), class:"btn text-secondary mb-0" %>
+      <%= link_to "メニューを削除する", menu_path(@menu), method: :delete, class:"btn text-secondary mb-0" %>
+      <%= link_to "メニューを作成する", new_menu_path, class:"btn text-secondary mb-0" %>
+      <%= link_to "自分のページに戻る", root_path, class:"btn text-secondary mb-0" %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team), class:"btn text-secondary mb-0" %>
     <% elsif user_signed_in? %>
-      <%= link_to "自分のページに戻る", root_path %>
-      <%= link_to "チームのページに戻る", team_path(@menu.team) %>
+      <%= link_to "自分のページに戻る", root_path, class:"btn text-secondary mb-0" %>
+      <%= link_to "チームのページに戻る", team_path(@menu.team), class:"btn text-secondary mb-0" %>
     <% end %>
   </div>
 </main>
