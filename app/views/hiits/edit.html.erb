@@ -2,42 +2,40 @@
   <%= render "shared/error_messages", model: @hiit_menu_hiit %>
   <div class="menu-detail">
     <%= form_with model: @hiit_menu_hiit, url: "/hiits/#{@hiit.id}", method: :patch, local: true do |f| %>
-    <div>
+    <div class="form-group">
       <%= f.label :name, "HIITの名前" %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, class:"form-control" %>
     </div>
-    <div>
+    <div class="form-group">
       <%= f.label :active_time, "1種目あたりの時間" %><i>(「（半角数字）秒または分」という形で入力してください)</i>
-      <%= f.text_field :active_time %>
+      <%= f.text_field :active_time, class:"form-control" %>
     </div>
-    <div>
+    <div class="form-group">
       <%= f.label :rest_time, "休憩時間" %><i>(「（半角数字）秒または分」という形で入力してください)</i>
-      <%= f.text_field :rest_time %>
+      <%= f.text_field :rest_time, class:"form-control" %>
     </div>
     <div>
-      <%= f.label :date, "実施日" %><i>(このHIITを実施する曜日に全てチェックを入れてください)</i><br>
-      <div class="day-container">
-      <%= f.collection_check_boxes(:date, Wday.all, :id, :name, include_hidden: false, name: "hiit_menu_hiit[date][]") %>
-      </div>
+      <div><span  class="fs-4">実施日</span><br>(このHIITを実施する曜日に全てチェックを入れてください)</div>
+      <%= f.collection_check_boxes(:date, Wday.all, :id, :name, include_hidden: false, checked: @hiit_menu_hiit.date) do |b| %>
+        <div class="form-group form-check form-check-inline"><%= b.label {b.check_box + b.text} %></div>
+      <% end %>
     </div>
     <div>このHIITで行う種目を選択してください</div>
-    <div>
+    <div class="form-group">
       <% 8.times do |i| %>
-        <div>
-          <%= "#{i + 1}番目の種目" %><select name="hiit_menu_hiit[menu_ids][]">
+          <%= "#{i + 1}番目の種目" %><select name="hiit_menu_hiit[menu_ids][]" class="form-control">
             <option value="0">---</option>
             <% current_user.team.menus.each do |menu| %>
               <option value='<%= "#{menu.id}" %>'><%= menu.name %></option>
             <% end %>
           </select>
-        </div>
       <% end %>
     </div>
-    <div>
-      <%= f.submit "HIITを編集する",class:"btn" %>
-      <div class="lower-link">
-        <%= link_to "HIITのページに戻る", hiit_path(@hiit) %>
-        <%= link_to "チームのページに戻る", team_path(current_user.team) %>
+    <div class="form-group">
+      <%= f.submit "HIITを編集する",class:"btn bg-light form-control" %>
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-around">
+        <%= link_to "HIITのページに戻る", hiit_path(@hiit), class:"btn text-secondary mb-0" %>
+        <%= link_to "チームのページに戻る", team_path(current_user.team), class:"btn text-secondary mb-0" %>
       </div>
     </div>
     <% end %>

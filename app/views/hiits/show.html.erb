@@ -6,79 +6,101 @@
       </div>
     <% end %>
   <% end %>
-  <div class="hiit-show-title"><span><%= link_to @hiit.name, hiit_path(@hiit) %></span>の詳細ページです</div>
-  <div class="hiit-show-hiit-abstract">
-    <%= "1セットあたりの時間：#{@hiit.active_time}" %>
-    <%= " ／ セット間の休憩時間：#{@hiit.rest_time}" %>
-  </div>
-  <div>
-    <div class="hiit-dates-container-title">
-      このHIITを行う曜日
-      <% 7.times do |i| %>
-        <% if @wday_list.include?(i) %>
-          <span><%= Wday.find(i).name %> </span>
-        <% end %>
-      <% end %>
+
+  <% group = @hiit.group %>
+
+  <div class="card mb-3">
+    <div class="card-header text-center">
+      <%= link_to @hiit.name, hiit_path(@hiit), class:"text-secondary fs-3 text-decoration-none" %>
     </div>
-  </div>
-  <div>
-    <div class="menu-containers-title">このHIITで行う種目</div>
-    <div class="menu-containers">
-    <% @menus.length.times do |i|%>
-      <div class="each-menu-container">
-        <%= "#{(i + 1)}種目目" %>
-      <%= link_to menu_path(@menus[i]) do %>
-        <%= image_tag @menus[i].icon.variant(resize: "100x100") %>
-        <%= @menus[i].name %>
-      <% end %>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-6 py-2 text-center">
+          1種目あたりの時間：<%= @hiit.active_time %>
+        </div>
+        <div class="col-12 col-sm-6 py-2 text-center">
+          休憩時間：<%= @hiit.rest_time %>
+        </div>
       </div>
-    <% end %>
+      <div class="row py-2">
+        <div class="col-12 col-md-4 text-md-center">このHIITを行う曜日</div>
+        <div class="col-12 col-md-8 text-end text-md-center">
+          <% 7.times do |i| %>
+            <% if @wday_list.include?(i) %>
+              <span class="badge bg-secondary mx-2"><%= Wday.find(i).name %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="text-center bg-light py-2">
+        このHIITで行う種目
+      </div>
+      <div class="container">
+        <div class="row">
+          <% @menus.length.times do |i|%>
+            <div class="col-6 col-sm-4 col-md-3">
+              <div class="card my-2">
+                <%= link_to menu_path(@menus[i]), class:"text-decoration-none p-0" do %>
+                  <div class="card-header text-center text-secondary"><%= "#{(i + 1)}種目目" %></div>
+                  <%= image_tag @menus[i].icon, class:"img-fluid" %>
+                  <div class="card-footer text-center text-secondary"><%= @menus[i].name %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="text-center bg-light py-2">このHIITに取り組んでいるグループ</div>
+        <% if @hiit.group != nil %>
+          <div class="row">
+            <div class="col-4 text-center py-2">グループ名</div>
+            <div class="col-8 text-center py-2">所属している選手一覧</div>
+          </div>
+          <div class="row">
+            <div class="col-4 d-flex align-items-center justify-content-center">
+              <%= link_to group.name, group_path(group), class:"text-secondary text-decoration-none" %>
+            </div>
+            <% if group.user_groups.any? %>
+              <div class="col-8 d-flex flex-wrap align-items-center justify-content-center">
+                <% group.user_groups.each do |user_group| %>
+                  <% if user_signed_in? && current_user.id == user_group.user.id %>
+                    <div><%= link_to user_group.user.name, user_path(user_group.user), class:"text-secondary text-decoration-none" %></div>
+                  <% elsif user_signed_in? && current_user.admin? %>
+                    <div><%= link_to user_group.user.name, detail_user_path(user_group.user), class:"text-secondary text-decoration-none" %></div>
+                  <% elsif user_signed_in? %>
+                    <div><%= user_group.user.name%></div>
+                  <% end %>
+                <% end %>
+              </div>
+            <% else %>
+            <div class="col-8">
+              このグループに所属している選手はいません
+            </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div>このHIITに取り組んでいるグループはありません</div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <table class="hiit-show-table">
-    <tr class="hiit-group-title">
-      <th class="title-th" colspan="2">このHIITを登録しているグループ</th>
-    </tr>
-    <tr>
-      <th class="group-name-th">グループ名</th>
-      <th class="group-name-th">選手名</th>
-    </tr>
-    <% if @hiit.group != nil %>
-    <% group = @hiit.group %>
-      <tr>
-        <th class="group-name-th"><%= link_to group.name, group_path(group) %></th>
-        <% if group.user_groups.any? %>
-          <td>
-            <% group.user_groups.each do |user_group| %>
-              <% if user_signed_in? && current_user.id == user_group.user.id %>
-                <div><%= link_to user_group.user.name, user_path(user_group.user) %></div>
-              <% elsif user_signed_in? && current_user.admin? %>
-                <div><%= link_to user_group.user.name, detail_user_path(user_group.user) %></div>
-              <% elsif user_signed_in? %>
-                <div><%= user_group.user.name %></div>
-              <% end %>
-            <% end %>
-          </td>
-        <% end %>
-      </tr>
-    <% else %>
-      <tr>
-        <td>このHIITに取り組んでいるグループはありません</td>
-      </tr>
-    <% end %>
-  </table>
+
+
+
   <% if user_signed_in? && current_user.admin? && @hiit.group == nil %>
     <div class="link-container">
-      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit) %>
+      <%= link_to "このHIITでグループを作成する", new_restricted_hiit_groups_path(@hiit), class:"text-secondary btn" %>
     </div>  
   <% end %>
-  <div class="link-container">
+  
+  <div class="d-flex justify-content-center flex-wrap">
     <% if user_signed_in? && current_user.admin? %>
-      <%= link_to "HIITを編集する", edit_hiit_path(@hiit) %>
-      <%= link_to "HIITを削除する", hiit_path(@hiit), method: :delete %>
-      <%= link_to "HIITを作成する", new_hiit_path %>
+      <%= link_to "HIITを編集する", edit_hiit_path(@hiit), class:"text-secondary btn" %>
+      <%= link_to "HIITを削除する", hiit_path(@hiit), method: :delete, class:"text-secondary btn" %>
+      <%= link_to "HIITを作成する", new_hiit_path, class:"text-secondary btn" %>
     <% end %>
-      <%= link_to "チームのページに戻る", team_path(@hiit.team) %>
-      <%= link_to "自分のページに戻る", root_path %>
-  </div>
+      <%= link_to "チームのページに戻る", team_path(@hiit.team), class:"text-secondary btn" %>
+      <%= link_to "自分のページに戻る", root_path, class:"text-secondary btn" %>
+    </div>
+  
 </main>
