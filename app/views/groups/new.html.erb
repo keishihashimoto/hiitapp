@@ -8,54 +8,75 @@
       </div>
     <% end %>
   <% end %>
-  <div class="menu-detail">
+  <div>
     <%= form_with model: @group_user_group, url: groups_path, local: true do |f| %>
     <div class="form-group">
       <%= f.label :name, "グループの名前" %>
       <%= f.text_field :name, class:"form-control" %>
     </div>
-    <div>
-      <div >"このグループで取り組むHIIT"<i>（一つだけ選択してください）</i></div>
-      <% if @enable_hiits.any? %>
-        <% @enable_hiits.each do |hiit| %>
-          <div>
-            <div class="form-group form-check">
-              <%= f.radio_button :hiit_id, hiit.id, class:"form-check-label" %>
-              <%= f.label :hiit_id, hiit.name, class:"form-check-input" %>
-              <%= hiit.active_time %>
-              <%= hiit.rest_time %>
-            </div>
-            <div>
-              このHIITを行う曜日：
-              <% Wday.all.each do |wday| %>
-                  <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
-                    <%= wday.name %>
-                  <% end %>
-              <% end %>
-            </div>
-            <div class="menu-containers">
-              <% hiit.menu_hiits.length.times do |i| %>
-                <div class="each-menu-container">
-                  <div><%= "#{i + 1}種目目" %></div>
-                  <%= link_to menu_path(hiit.menu_hiits[i].menu) do %>
-                    <%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "100x100") %>
-                    <%= hiit.menu_hiits[i].menu.name %>
-                  <% end %>
+    <div class="container">
+      <div>このグループで取り組むHIIT<i>（一つだけ選択してください）</i></div>
+      <div class="row">
+        <% if @enable_hiits.any? %>
+          <% @enable_hiits.each do |hiit| %>
+            <div class="card col-6 col-sm-4 cl-md-3">
+              <div>
+                <div class="form-group form-check py-2 border-bottom">
+                  <%= f.radio_button :hiit_id, hiit.id, class:"form-check-input" %>
+                  <%= f.label :hiit_id, hiit.name, {value: hiit.id, class:"form-check-label"} %>
                 </div>
-              <% end %>
+                <div class="text-center">
+                  <%= hiit.active_time %> / 
+                  <%= hiit.rest_time %>
+                </div>
+              </div>
+              <div class="text-center">
+                <% Wday.all.each do |wday| %>
+                    <% if HiitDate.exists?(hiit_id: hiit.id, date: wday.id) %>
+                      <span class="badge bg-secondary"><%= wday.name %></span>
+                    <% end %>
+                <% end %>
+              </div>
+              <div class="menu-containers">
+              
+                <div class="accordion w-100 my-2" id="accordionMenu-<%= hiit.id %>">
+                  <div class="accordion-item border-0">
+                    <div class="accordion-header" id="heading1">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= hiit.id %>" aria-expanded="false" aria-controls="collapse-<%= hiit.id %>">
+                        種目内容
+                      </button>
+                    </div>
+                    <div class="accordion-collapse collapse" id="collapse-<%= hiit.id %>" aria-labelledby="heading1" data-bs-parent="#accordionMenu-<%= hiit.id %>">
+                      <div class="accordion-body row">
+                        <% hiit.menu_hiits.length.times do |i| %>
+                          <div class="col-12 col-lg-6 border-bottom">
+                            <div class="text-center py-2"><%= "#{i + 1}種目目" %></div>
+                            <%= link_to menu_path(hiit.menu_hiits[i].menu), class:"text-secondary text-decoration-none" do %>
+                              <%= image_tag hiit.menu_hiits[i].menu.icon, class:"img-fluid text-center" %>
+                              <div class="bg-light text-center"><%= hiit.menu_hiits[i].menu.name %></div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
+        <% else %>
+          <div>現在利用可能なHIITはありません</div>
         <% end %>
-      <% else %>
-        <div>現在利用可能なHIITはありません</div>
-      <% end %>
+      </div>
     </div>
     
-    <%= f.label :user_ids, "このグループのメンバー" %>
+    <div>このグループのメンバー</div>
     
-    <%= f.collection_check_boxes(:user_ids, @users, :id, :name, include_hidden: false, name: "group_user_group[user_ids][]") do |b| %>
-      <div class="form-check form-check-inline form-group"><%= b.label {b.check_box + b.text } %></div>
-    <% end %>
+    <div>
+      <%= f.collection_check_boxes(:user_ids, @users, :id, :name, include_hidden: false, name: "group_user_group[user_ids][]") do |b| %>
+        <div class="form-check form-check-inline form-group"><%= b.label {b.check_box + b.text } %></div>
+      <% end %>
+    </div>
       
     
     <div class="form-group">
