@@ -1,9 +1,9 @@
 <% users.each do |user| %>
-  <div>
+  <div class="pt-2">
     <% if user_signed_in? && user.id == current_user.id %>
-      <%= link_to user.name, user_path(user) %>
+      <%= link_to user.name, user_path(user), class:"text-secondary text-decoration-none" %>
     <% elsif user_signed_in? && current_user.admin? %>
-      <%= link_to user.name, detail_user_path(user) %>
+      <%= link_to user.name, detail_user_path(user), class:"text-secondary text-decoration-none" %>
     <% elsif user_signed_in? %>
       <%= user.name %>
     <% end %>

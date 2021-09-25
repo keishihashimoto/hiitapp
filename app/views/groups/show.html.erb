@@ -1,43 +1,62 @@
 <main>
-  <div class="team-show-group-name">グループ名：<%= link_to "#{@group.name}", group_path(@group) %></div>
-  <div class="team-show-hiit-name">このグループで取り組んでいるHIIT：<%= link_to @group.hiit.name, hiit_path(@group.hiit) %></div>
-  <div>
-    このHIITを行う曜日：
-    <% Wday.all.each do |wday| %>
-      <% if HiitDate.exists?(date: wday.id, hiit_id: @group.hiit.id) %>
-        <span>
-          <%= "  #{wday.name}  " %>
-        </span>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="group-show-hiit-abstract"><%= "一種目あたりの時間：#{@group.hiit.active_time}" %><%= " ／ 休憩時間：#{@group.hiit.rest_time}" %></div>
-  <div class="group-hiit-title">HIITの内容</div>
-  <div class="menu-containers">
-    <% @group.hiit.menu_hiits.length.times do |i| %>
-      <div class="each-menu-container">
-        <div><%= "#{i + 1}種目目" %></div>
-        <%= link_to menu_path(@group.hiit.menu_hiits[i].menu) do %>
-          <%= image_tag @group.hiit.menu_hiits[i].menu.icon.variant(resize: "100x100") %>
-          <%=  @group.hiit.menu_hiits[i].menu.name %>
-        <% end %>
+  <div class="alert alert-secondary text-center fs-3">グループの詳細ページです</div>
+  <div class="container mx-md-auto" style="max-width: 788px">
+    <div class="card">
+      <div class="card-header text-center fs-4">
+        <%= link_to "#{@group.name}", group_path(@group), class:"text-secondary text-decoration-none" %>
       </div>
-    <% end %>
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>HIIT名</div>
+          <div>
+            <%= link_to @group.hiit.name, hiit_path(@group.hiit), class:"text-secondary text-decoration-none fs-4" %>
+            <% Wday.all.each do |wday| %>
+              <% if HiitDate.exists?(date: wday.id, hiit_id: @group.hiit.id) %>
+                <span class="badge bg-secondary" style="vertical-align: 5px;">
+                  <%= "  #{wday.name.slice(0)}  " %>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="text-center py-2 border-top">
+          <%= "1種目あたりの時間：#{@group.hiit.active_time}" %>
+          <br class="d-inline d-sm-none">
+          <%= "/ 休憩時間：#{@group.hiit.rest_time}" %>
+        </div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+          <% @group.hiit.menu_hiits.length.times do |i| %>
+            <div class="col my-1">
+              <div class="card">
+                <div class="card-header text-center"><%= "#{i + 1}種目目" %></div>
+                <%= link_to menu_path(@group.hiit.menu_hiits[i].menu), class:"text-secondary text-center" do %>
+                  <%= image_tag @group.hiit.menu_hiits[i].menu.icon, class:"img-fluid" %>
+                  <div class="card-footer px-2 px-lg-3"><%=  @group.hiit.menu_hiits[i].menu.name %></div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div>
+          <div class="bg-light my-2 py-2">このグループのメンバー</div>
+          <div class="d-flex flex-wrap">
+            <%= render "shared/each_user", users: @users %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="this-group-member">このグループのメンバー</div>
-  <div class="group-users-container">
-    <%= render "shared/each_user", users: @users %>
-  </div>
-  <div>
+
+  <div class="my-3" >
     <% if user_signed_in? && current_user.admin? %>
-      <div class="lower-link">
-        <%= link_to "グループの情報を編集する", edit_group_path(@group) %>
-        <%=  link_to "グループを削除する", group_path(@group), method: :delete %>
+      <div class="lower-link text-center">
+        <%= link_to "グループの情報を編集する", edit_group_path(@group), class:"text-secondary text-decoration-none" %>
+        <%=  link_to "グループを削除する", group_path(@group), method: :delete, class:"text-secondary text-decoration-none" %>
       </div>
     <% end %>
-    <div class="lower-link">
-      <%= link_to "チームのページに戻る", team_path(current_user.team) %>
-      <%= link_to "自分のページに戻る", root_path %>
+    <div class="lower-link text-center">
+      <%= link_to "チームのページに戻る", team_path(current_user.team), class:"text-secondary text-decoration-none" %>
+      <%= link_to "自分のページに戻る", root_path, class:"text-secondary text-decoration-none" %>
     </div>
   </div>
 </main>
