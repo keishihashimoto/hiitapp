@@ -5,7 +5,7 @@ jQuery(function($){
   // active_time, rest_time, 1 ~ 8種目目の種目名を取得する。
   $('.timer').on("click", function(){
     // 計測スタートボタン押下時に、画面を一番上までスクロールさせる
-    $("main").scrollTop(70)
+    $("main").scrollTop($("#cycle_count").scrollTop())
     const target = this
     const restImage = $('#rest_image').clone().css("display", "inline-block")
     const hiitMenuImages = $(target).parents(".card").find("img")
