@@ -40,9 +40,9 @@
           <% @menus.length.times do |i|%>
             <div class="col-6 col-sm-4 col-md-3">
               <div class="card my-2">
-                <%= link_to menu_path(@menus[i]), class:"text-decoration-none p-0" do %>
+                <%= link_to menu_path(@menus[i]), class:"text-decoration-none p-0 text-center" do %>
                   <div class="card-header text-center text-secondary"><%= "#{(i + 1)}種目目" %></div>
-                  <%= image_tag @menus[i].icon, class:"img-fluid" %>
+                  <div class="card-image-container"><%= image_tag @menus[i].icon, class:"img-fluid" %></div>
                   <div class="card-footer text-center text-secondary"><%= @menus[i].name %></div>
                 <% end %>
               </div>

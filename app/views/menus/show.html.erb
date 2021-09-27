@@ -13,7 +13,7 @@
     </div>
     <div class="list-group list-group-flush">
       <div class="d-flex align-items-center justify-content-center list-group-item">
-        <%= image_tag @menu.icon, class:"img-fluid" %>
+        <div class="card-image-container"><%= image_tag @menu.icon, class:"img-fluid" %></div>
       </div>
       <div class="list-group-item bg-light">
         <% if @menu.text != "" %>

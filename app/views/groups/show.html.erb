@@ -30,7 +30,7 @@
               <div class="card">
                 <div class="card-header text-center"><%= "#{i + 1}種目目" %></div>
                 <%= link_to menu_path(@group.hiit.menu_hiits[i].menu), class:"text-secondary text-center" do %>
-                  <%= image_tag @group.hiit.menu_hiits[i].menu.icon, class:"img-fluid" %>
+                  <div class="card-image-container"><%= image_tag @group.hiit.menu_hiits[i].menu.icon, class:"img-fluid" %></div>
                   <div class="card-footer px-2 px-lg-3"><%=  @group.hiit.menu_hiits[i].menu.name %></div>
                 <% end %>
               </div>

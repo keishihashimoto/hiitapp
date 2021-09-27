@@ -39,10 +39,10 @@
         </div>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
           <% hiit.menu_hiits.length.times do |i| %>
-            <div class="cols">
+            <div class="cols text-center">
               <div class="menu-number"><%= "#{i + 1}種目目" %></div>
-              <%= link_to menu_path(hiit.menu_hiits[i].menu), class:"text-secondary btn mb-0" do %>
-                <%= image_tag hiit.menu_hiits[i].menu.icon, class:"img-fluid" %>
+              <%= link_to menu_path(hiit.menu_hiits[i].menu), class:"text-secondary btn mb-0 text-center" do %>
+                <div class="card-image-container"><%= image_tag hiit.menu_hiits[i].menu.icon, class:"img-fluid" %></div>
                 <span class="menu_names"><%= "#{hiit.menu_hiits[i].menu.name}" %>
               <% end %>
             </div>
