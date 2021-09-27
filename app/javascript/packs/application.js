@@ -9,7 +9,6 @@ require("@rails/activestorage").start()
 require("channels")
 require("../preview_icon")
 require("../timer")
-require("../image")
 
 require("jquery")
 
