@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <div>HIIT名</div>
           <div>
-            <%= link_to @group.hiit.name, hiit_path(@group.hiit), class:"text-secondary text-decoration-none fs-4" %>
+            <%= link_to @group.hiit.name, hiit_path(@group.hiit), class:"text-secondary text-decoration-none fs-4" %><br class="d-inline d-sm-none">
             <% Wday.all.each do |wday| %>
               <% if HiitDate.exists?(date: wday.id, hiit_id: @group.hiit.id) %>
                 <span class="badge bg-secondary" style="vertical-align: 5px;">
@@ -24,13 +24,13 @@
           <br class="d-inline d-sm-none">
           <%= "/ 休憩時間：#{@group.hiit.rest_time}" %>
         </div>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
           <% @group.hiit.menu_hiits.length.times do |i| %>
             <div class="col my-1">
               <div class="card">
                 <div class="card-header text-center"><%= "#{i + 1}種目目" %></div>
                 <%= link_to menu_path(@group.hiit.menu_hiits[i].menu), class:"text-secondary text-center" do %>
-                  <div class="card-image-container"><%= image_tag @group.hiit.menu_hiits[i].menu.icon, class:"img-fluid" %></div>
+                  <div class="card-image-container d-flex align-items-center justify-content-center mx-auto" style="width: 150px; height: 150px;"><%= image_tag @group.hiit.menu_hiits[i].menu.icon.variant(resize: "150 x 150"), class:"img-fluid" %></div>
                   <div class="card-footer px-2 px-lg-3"><%=  @group.hiit.menu_hiits[i].menu.name %></div>
                 <% end %>
               </div>

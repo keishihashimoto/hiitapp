@@ -13,7 +13,7 @@
         <div class="fs-4">このグループで取り組むHIIT<span class="fs-6"><br>一つだけ選択してください</span></div>
 
         <div class="row">
-          <div class="col-12 col-lg-6 py-2">
+          <div class="col-12 py-2">
           
             <div class="card py-0">
               <div class="card-header d-flex justify-content-start align-items-center">
@@ -45,11 +45,11 @@
                     <div class="accordion-collapse collapse" id="collapse_<%= @hiit.id %>" data-bs-parent="#accordion_<%= @hiit.id %>" aria-labelledby="headding_<%= @hiit.id %>">
                       <div class="accordion-body row">
                         <% @hiit.menu_hiits.length.times do |i| %>
-                          <div class="col-6 col-sm-4 col-md-3 col-lg-4">
+                          <div class="col-12 col-sm-6 col-md-4">
                             <div class="card pb-0">
                               <div class="text-center card-header"><%= "#{i + 1}種目目" %></div>
                               <%= link_to menu_path(@hiit.menu_hiits[i].menu),class:"text-secondary" do %>
-                                <div class="card-image-container"><%= image_tag @hiit.menu_hiits[i].menu.icon, class:"img-fluid" %></div>
+                                <div class="d-flex justify-content-center align-items-center mx-auto" style="with: 100px; height: 100px;"><%= image_tag @hiit.menu_hiits[i].menu.icon.variant(resize: "100 x 100"), class:"img-fluid" %></div>
                                 <div class="card-footer text-center"><%= @hiit.menu_hiits[i].menu.name %></div>
                               <% end %>
                             </div>
@@ -66,7 +66,7 @@
           <% if @enable_hiits.any? %>
             <% @enable_hiits.each do |hiit| %>
 
-              <div class="col-12 col-lg-6 py-2">
+              <div class="col-12 py-2">
                 <div class="card">
                   <div class="card-header d-flex justify-content-start align-items-center">
                     <div class="form-check pb-0">
@@ -97,11 +97,11 @@
                         <div class="accordion-collapse collapse" id="collapse_<%= hiit.id %>" data-bs-parent="#accordion_<%= hiit.id %>" aria-labelledby="headding_<%= hiit.id %>">
                           <div class="accordion-body row">
                             <% hiit.menu_hiits.length.times do |i| %>
-                              <div class="col-6 col-sm-4 col-md-3 col-lg-4">
+                              <div class="col-12 col-sm-6 col-md-4">
                                 <div class="card pb-0">
                                   <div class="text-center card-header"><%= "#{i + 1}種目目" %></div>
                                   <%= link_to menu_path(hiit.menu_hiits[i].menu),class:"text-secondary" do %>
-                                    <%= image_tag hiit.menu_hiits[i].menu.icon, class:"img-fluid" %>
+                                    <div class="d-flex justify-content-center align-items-center mx-auto" style="with: 100px; height: 100px;"><%= image_tag hiit.menu_hiits[i].menu.icon.variant(resize: "100 x 100"), class:"img-fluid" %></div>
                                     <div class="card-footer text-center"><%= hiit.menu_hiits[i].menu.name %></div>
                                   <% end %>
                                 </div>
