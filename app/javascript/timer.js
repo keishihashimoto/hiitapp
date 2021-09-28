@@ -6,13 +6,18 @@ jQuery(function($){
   $('.timer').on("click", function(){
     // 計測スタートボタン押下時に、画面を一番上までスクロールさせる
     $("main").scrollTop($("#cycle_count").scrollTop())
-    const target = this
-    const restImage = $('#rest_image').clone().css("display", "inline-block")
-    const hiitMenuImages = $(target).parents(".card").find("img")
-    const activeTimeStr = $(this).parents(".card").find(".active_time").text().replace("1種目あたりの時間：", "").replace("秒", "")
-    const activeTime = new Number(activeTimeStr)
-    const restTimeStr = $(this).parents(".card").find(".rest_time").text().replace("休憩時間：", "").replace("秒", "")
-    const restTime = new Number(restTimeStr)
+    // もし一度タイマーを動かした後であれば、鳴っている音楽を全て止める
+    $('#countdownAudio')[0].pause()
+    $('#finishAudio')[0].pause()
+    // タイマー終了までボタンを押せないようにする
+    $('.timer').prop("disabled", true)
+    var target = this
+    var restImage = $('#rest_image').clone().css("display", "inline-block")
+    var hiitMenuImages = $(target).parents(".card").find("img")
+    var activeTimeStr = $(this).parents(".card").find(".active_time").text().replace("1種目あたりの時間：", "").replace("秒", "")
+    var activeTime = new Number(activeTimeStr)
+    var restTimeStr = $(this).parents(".card").find(".rest_time").text().replace("休憩時間：", "").replace("秒", "")
+    var restTime = new Number(restTimeStr)
     var menus = []
     for(var i = 0; i <= 7; i++){
       var menuName = $(this).parents(".card").find("span.menu_names")[i]
@@ -22,11 +27,15 @@ jQuery(function($){
     var totalTime = 8 * activeTime + 7 * restTime
     var remainingTotalTime = totalTime
     // 一種目目の情報を表示する
-    $('#cycle_count').text(1)
-    $('#menu_name').text(menus[0])
-    $('#time-area').text(activeTime)
+    $('#cycle_count').text(1)// 1回目
+    $('#menu_name').text(menus[0])// 種目名
+    $('#time-area').text(activeTime)// 秒数
+    var firstMenuImage = $(hiitMenuImages)[0]
+    var firstMenuImageSrc = $(firstMenuImage).attr("src")
+    $("#ready_image").attr("src", firstMenuImageSrc).width("100%").height("100%")// 画像
+    // プログレスバー
     $('#progress-area').html("<div></div>")
-    const progress = $('#progress-area').find("div").addClass("progress")
+    var progress = $('#progress-area').find("div").addClass("progress")
     $(progress).html("<div></div>")
     $(progress).find("div").addClass("progress-bar")
     $(".progress-bar").width("100%").attr("aria-valuemin", "0").attr("aria-valuemax", activeTimeStr)
@@ -54,12 +63,12 @@ jQuery(function($){
         var menuImageSrc = $(menuImageOriginal).attr("src")
         var menuImage = $("<img>")
         $(menuImage).addClass("img-fluid").width("100%").height("100%").attr("src",menuImageSrc)
-        console.log(menuImage.attr("scr"))
       }
       $('#cycle_count').text(cycleCount)
       $('#menu_name').text(doingMenuName)
       $('#time-area').text(displayTime)
       $("#card-image-container").html(menuImage)
+      console.log(displayTime)
       // progress-barの補正
       if(doingMenuName == "休憩時間"){
         var percent = Math.floor((displayTime / restTime) * 100)
@@ -79,9 +88,11 @@ jQuery(function($){
       
     }, 1000)
 
-    // timeCount関数を停止する処理
+    // 完了時の処理
     setTimeout(function(){
+      // timeCount関数を停止する処理
       clearInterval(timeCount)
+      //表示を終了時のものに修正
       $('#time-area').text("--")
       $('#menu_name').text("お疲れ様でした")
       $('#cycle_count').text("終了")

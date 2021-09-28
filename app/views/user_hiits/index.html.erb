@@ -9,7 +9,7 @@
   <div class="card mb-3">  
     <div class="text-center card-header"><span class="badge bg-secondary" id="cycle_count">0</span><span id="menu_name">種目名</span></div>
     <div class="w-50 align-self-center d-flex align-items-center" id="card-image-container">
-      <%= image_tag "junbi.png", class:"img-fluid", id:"rest_image" %>
+      <%= image_tag "junbi.png", class:"img-fluid", id:"ready_image" %>
     </div>
     <div id="progress-area"></div>
     <div class="text-center card-footer">残り<span id="time-area">--</span>秒</div>
@@ -31,7 +31,7 @@
           <div class="col d-flex justify-content-around align-items-center">
             <% if user_signed_in? && @user.id == current_user.id %>
               <%= link_to "更新する", hiit_user_hiits_path(hiit), method: :post, class:"btn text-secondary mb-0 p-0" %>
-              <span class="timer btn btn-outline-secondary mb-0" id="timer_<%= hiit.id %>">時間を測る</span>
+              <button class="timer btn btn-outline-secondary mb-0" id="timer_<%= hiit.id %>">時間を測る</button>
             <% end %>
           </div>
         </div>
