@@ -51,7 +51,10 @@ jQuery(function($){
       } else {
         var displayTime = remainingTotalTime - (8 - cycleCount) * (activeTime + restTime)
         var menuImageOriginal = hiitMenuImages[(cycleCount - 1)]
-        var menuImage = $(menuImageOriginal).clone().addClass("img-fluid").width("100%").height("100%")
+        var menuImageSrc = $(menuImageOriginal).attr("src")
+        var menuImage = $("<img>")
+        $(menuImage).addClass("img-fluid").width("100%").height("100%").attr("src",menuImageSrc)
+        console.log(menuImage.attr("scr"))
       }
       $('#cycle_count').text(cycleCount)
       $('#menu_name').text(doingMenuName)
