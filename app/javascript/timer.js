@@ -31,57 +31,62 @@ jQuery(function($){
     $(progress).find("div").addClass("progress-bar")
     $(".progress-bar").width("100%").attr("aria-valuemin", "0").attr("aria-valuemax", activeTimeStr)
     // totalTimeが0になったら終了するタイマーを仕掛ける
-    setInterval(function(){
-      if(remainingTotalTime == 0){
-        clearInterval(this)
-        $('#time-area').text("--")
-        $('#menu_name').text("お疲れ様でした")
-        $('#cycle_count').text("終了")
-        const finishImage = $('#finish_image').clone().css("display", "inline-block").addClass("img-fluid")
-        $("#card-image-container").html(finishImage)
-      } else {        
-        remainingTotalTime--
-        var cycleCount = 8 - Math.floor((remainingTotalTime + restTime) / (activeTime + restTime))
-        if((remainingTotalTime + restTime) % (activeTime + restTime) == 0){
-          cycleCount++
-        }
-
-        var calcTime = (totalTime - remainingTotalTime) - (cycleCount - 1) * (activeTime + restTime)
-        if(calcTime < activeTime){
-          var doingMenuName = menus[(cycleCount - 1)]
-        } else {
-          var doingMenuName = "休憩時間"
-        }
-        if(doingMenuName == "休憩時間"){
-          var displayTime = remainingTotalTime - (8 - 1 - cycleCount) * (activeTime + restTime) - activeTime
-          var menuImage = $(restImage).addClass("img-fluid").width("100%").height("100%")
-        } else {
-          var displayTime = remainingTotalTime - (8 - cycleCount) * (activeTime + restTime)
-          var menuImageOriginal = hiitMenuImages[(cycleCount - 1)]
-          var menuImage = $(menuImageOriginal).clone().addClass("img-fluid").width("100%").height("100%")
-        }
-        $('#cycle_count').text(cycleCount)
-        $('#menu_name').text(doingMenuName)
-        $('#time-area').text(displayTime)
-        $("#card-image-container").html(menuImage)
-        // progress-barの補正
-        if(doingMenuName == "休憩時間"){
-          var percent = Math.floor((displayTime / restTime) * 100)
-          var valueMax = restTimeStr
-        } else {
-          var percent = Math.floor((displayTime / activeTime) * 100)
-          var valueMax = activeTimeStr
-        }
-        $('.progress-bar').width(`${percent}%`).attr("aria-valuemax", valueMax).attr("aria-valuenow", percent)
-        if(remainingTotalTime == 0){
-          clearInterval(this)
-          $('#time-area').text("--")
-          $('#menu_name').text("お疲れ様でした")
-          $('#cycle_count').text("終了")
-          const finishImage = $('#finish_image').clone().css("display", "inline-block").addClass("img-fluid")
-          $("#card-image-container").html(finishImage)
-        }
+    const timeCount = setInterval(function(){
+           
+      remainingTotalTime--
+      var cycleCount = 8 - Math.floor((remainingTotalTime + restTime) / (activeTime + restTime))
+      if((remainingTotalTime + restTime) % (activeTime + restTime) == 0){
+        cycleCount++
       }
+
+      var calcTime = (totalTime - remainingTotalTime) - (cycleCount - 1) * (activeTime + restTime)
+      if(calcTime < activeTime){
+        var doingMenuName = menus[(cycleCount - 1)]
+      } else {
+        var doingMenuName = "休憩時間"
+      }
+      if(doingMenuName == "休憩時間"){
+        var displayTime = remainingTotalTime - (8 - 1 - cycleCount) * (activeTime + restTime) - activeTime
+        var menuImage = $(restImage).addClass("img-fluid").width("100%").height("100%")
+      } else {
+        var displayTime = remainingTotalTime - (8 - cycleCount) * (activeTime + restTime)
+        var menuImageOriginal = hiitMenuImages[(cycleCount - 1)]
+        var menuImage = $(menuImageOriginal).clone().addClass("img-fluid").width("100%").height("100%")
+      }
+      $('#cycle_count').text(cycleCount)
+      $('#menu_name').text(doingMenuName)
+      $('#time-area').text(displayTime)
+      $("#card-image-container").html(menuImage)
+      // progress-barの補正
+      if(doingMenuName == "休憩時間"){
+        var percent = Math.floor((displayTime / restTime) * 100)
+        var valueMax = restTimeStr
+      } else {
+        var percent = Math.floor((displayTime / activeTime) * 100)
+        var valueMax = activeTimeStr
+      }
+      $('.progress-bar').width(`${percent}%`).attr("aria-valuemax", valueMax).attr("aria-valuenow", percent)
+
+      // 音声ファイルの制御部分
+      // displayTimeが残り3秒になったらcountdown音楽を再生
+      // 残り時間が0になったら終了音楽を再生
+      if(displayTime == 3){
+        $("#countdownAudio")[0].play()
+      }
+      
     }, 1000)
+
+    // timeCount関数を停止する処理
+    setTimeout(function(){
+      clearInterval(timeCount)
+      $('#time-area').text("--")
+      $('#menu_name').text("お疲れ様でした")
+      $('#cycle_count').text("終了")
+      const finishImage = $('#finish_image').clone().css("display", "inline-block").addClass("img-fluid")
+      $("#card-image-container").html(finishImage)
+      $("#finishAudio")[0].play()
+      $('#countdownAudio')[0].pause()
+      $('.progress-bar').width(0)
+    }, totalTime * 1000)
   })
 })

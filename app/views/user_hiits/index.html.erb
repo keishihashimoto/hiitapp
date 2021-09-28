@@ -1,16 +1,18 @@
 <main>
   <%= image_tag "rest.png", class:"img-fluid", id:"rest_image", style:"display: none;" %>
   <%= image_tag "finish.png", class:"img_fluid", id:"finish_image", style:"display: none;" %>
+  <%= audio_tag("countdown.mp3", id:"countdownAudio") %>
+  <%= audio_tag("finish.mp3", id:"finishAudio") %>
   <h1 class="shared-title mx-0"><%= link_to @user.name, user_path(@user), class:"text-dark text-decoration-none" %>さんの本日の予定</h1>
 
   
-  <div class="card">  
+  <div class="card mb-3">  
     <div class="text-center card-header"><span class="badge bg-secondary" id="cycle_count">0</span><span id="menu_name">種目名</span></div>
     <div class="w-50 align-self-center d-flex align-items-center" id="card-image-container">
       <%= image_tag "junbi.png", class:"img-fluid", id:"rest_image" %>
     </div>
     <div id="progress-area"></div>
-    <div class="text-center">残り<span id="time-area">--</span>秒</div>
+    <div class="text-center card-footer">残り<span id="time-area">--</span>秒</div>
   </div>
   
 
