@@ -15,6 +15,9 @@ HiitAppのHIITとはトレーニング方法の一種であり、トレーニン
 ## アプリURL
 https://hiitapp.herokuapp.com/
 
+## テスト用アカウント
+email: test@test, password: 0000000a
+
 ## 制作意図
 このアプリの目的は、スポーツチームでHIITに取り組む上で、管理を効率化することです。
 
@@ -36,15 +39,15 @@ https://hiitapp.herokuapp.com/
  ## DEMO
  
  ### HIITの作成
- 
+ [![Image from Gyazo](https://i.gyazo.com/72b525ffc43cc4d1ab6035f6c794a99f.gif)](https://gyazo.com/72b525ffc43cc4d1ab6035f6c794a99f)
  ### グループの作成
- 
+ [![Image from Gyazo](https://i.gyazo.com/074214c51d138f521b37bbd5746bfd96.gif)](https://gyazo.com/074214c51d138f521b37bbd5746bfd96)
  ### HIIT実施状況の確認
- 
+ [![Image from Gyazo](https://i.gyazo.com/880d4bf4e7786e963ca23519674dfbf6.gif)](https://gyazo.com/880d4bf4e7786e963ca23519674dfbf6)
  ### タイマー機能
- 
+ [![Image from Gyazo](https://i.gyazo.com/f297107d08a955b613ed831061633daa.gif)](https://gyazo.com/f297107d08a955b613ed831061633daa)
  ### HIIT実施記録の更新
-
+[![Image from Gyazo](https://i.gyazo.com/b3c8fb5a31e63fa5ee44a97571f3a812.gif)](https://gyazo.com/b3c8fb5a31e63fa5ee44a97571f3a812)
 ## テーブル設計
 
 ### teams テーブル
