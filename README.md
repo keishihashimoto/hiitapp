@@ -1,42 +1,66 @@
-# README
+## アプリ名
+HiitApp
+## アプリケーション概要
+HiitAppのHIITとはトレーニング方法の一種であり、トレーニングと休憩を数十秒ごとに交互に繰り返すやり方のことを言います。  
+例）腕立て伏せ20秒→休憩10秒→スクワット20秒→腕立て伏せ20秒→休憩10秒→スクワット20秒  
+このアプリは、スポーツチームがチームでHIITに取り組むこと上で、指導者の方の管理をサポートする目的で作成しました。　　
+もちろん、個人でもご利用いただけます。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### このアプリでは、以下のことが可能です。
+・さまざまな種目を組み合わせてHIITのメニューを作成できます。  
+・HIITに実施予定日を設定することで、スケジュール管理が可能です。  
+・アプリのタイマー機能を用いて時間を図ることが可能です。  
+・実施したHIITはアプリ内で記録することが可能です。  
 
-Things you may want to cover:
+## アプリURL
+https://hiitapp.herokuapp.com/
 
-* Ruby version
+## 制作意図
+このアプリの目的は、スポーツチームでHIITに取り組む上で、管理を効率化することです。
 
-* System dependencies
+アプリケーション概要の項目で触れたHIITというトレーニング手法は、近年普及しつつあり専用のアプリもいくつかリリースされています。　　
+しかし、私が個人的に利用したところ、いくつかの問題点がありました。　　
+・複数のメニューを登録できない  
+ HIITは複数のメニューを用意し日替わりでローテーションすることも多い（例えば1日目は腕立て伏せと腹筋で2日目はスクワットと背筋、など）ですが、既存のアプリでは複数の種目を登録できないことがほとんどです。<br>
+ このため、前回とことなるメニューを行う場合には、一回一回メニューを登録し直さなくてはなりませんでした。<br>
+・HIITの実施有無の記録に関する機能が不十分<br>
+ 上記の例に関連してですが、HIITを実施したかどうかを記録する機能に関しても不十分でした。<br>
+ 既存のアプリでは、その日にHIITを行ったかどうかは記録できても、どのような種目を行ったかを記録できません。<br>
+ そのため、前回何をやったかを覚えておかないとその日にどのメニューを行えばよいかがよいかがよいかが分からなくなってしまうという問題がありました。<br>
+・チーム単位での管理に対応していない<br>
+ 既存のHIIT関連のアプリのほとんどは個人用です。<br>
+ そのため、誰がどんなメニューに取り組んでいるか、各個人がきちんとメニューをこなせているかどうかをチーム単位で管理することができませんでした。<br>
+ しかし、本アプリでは権限ユーザーならチーム内の全選手の情報を確認することが可能です。<br>
+ チームの指導者の方が選手のトレーニング状況を一括管理することが簡単になります。
+ 
+ ## DEMO
+ 
+ ### HIITの作成
+ 
+ ### グループの作成
+ 
+ ### HIIT実施状況の確認
+ 
+ ### タイマー機能
+ 
+ ### HIIT実施記録の更新
 
-* Configuration
+## テーブル設計
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-## teams テーブル
+### teams テーブル
 
 | Column | Type   | Options                   |
 | ------ | ------ | ------------------------- |
 | name   | string | null: false, unique: true |
 
-### Associations
+#### Associations
 
 - has_many :users
 - has_many :menus
 - has_many :hiits
 - has_many :groups
 
-## users テーブル
+### users テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -46,14 +70,14 @@ Things you may want to cover:
 | admin              | boolean    | null: false                    |
 | team               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :team
 - has_many :user_groups
 - has_many :groups, through: :user_groups
 - has_many :user-hiits
 
-## menus テーブル
+### menus テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -61,13 +85,13 @@ Things you may want to cover:
 | text               | text       |
 | team               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :team
 - has_many :menu_hiits
 - has_many :hiits, through: :menu_hiits
 
-## hiits テーブル
+### hiits テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -78,7 +102,7 @@ Things you may want to cover:
 | menus          | references | null: false, foreign_key: true | 
 | team               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :team
 - has_many :groups
@@ -87,7 +111,7 @@ Things you may want to cover:
 - has_many :menus, through: :menu_hiits
 - has_many :hiit_dates
 
-## groups テーブル
+### groups テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -95,26 +119,26 @@ Things you may want to cover:
 | hiit               | references | null: false, foreign_key: true |
 | team               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :team
 - has_many :user_groups
 - has_many :users, through: :user_groups
 - belongs_to :hiits
 
-## user_groupsテーブル
+### user_groupsテーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | user               | references | null: false, foreign_key: true |
 | group              | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :user
 - belongs_to :groups
 
-## user_hiitsテーブル
+### user_hiitsテーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -122,31 +146,31 @@ Things you may want to cover:
 | hiit               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :user
 - belongs_to :hiit
 
-## menu_hiitsテーブル
+### menu_hiitsテーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | menu               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
 
-### Associations
+#### Associations
 
 - belongs_to :menu
 - belongs_to :hiit
 
-## hiit_datesテーブル
+### hiit_datesテーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | hiit               | references | null: false, foreign_key: true |
 | date               | integer    | null: false                    |
 
-### Associations
+#### Associations
 
 - belongs_to :menu
 - belongs_to :hiit
