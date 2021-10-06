@@ -1,67 +1,77 @@
-<main>
+<main class="container">
   <% if user_signed_in? %>
-    <h1 class="shared-title"><%= current_user.name %>さんの今週の予定です</h1>
-    <div class="weekly-menu-container">
+    <h1 class="shared-title m-0 mb-2"><%= current_user.name %>さんの今週の予定です</h1>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
       <% 7.times do |i| %>
-        <div class="daily-menu-container rounded">
-          <div class="container-except-today">
-            <div class="date-container">
-              <%= "#{(Date.today - 3 + i).strftime('%m/%d')}" %>
-              <% day = (Date.today + i - 3).wday %>
-              <%= "(#{Wday.find(day).name.slice(0)})" %>
-            </div>
-            <% if @hiit_for_current_user.any? %>
-              <% 
-                that_day_hiit_for_current_user = []
-                @hiit_for_current_user.each do |hiit_for_current_user|
-                  if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day)
-                    HiitDate.where(hiit_id: hiit_for_current_user.id, date: day).each do |hiit_date|
-                      that_day_hiit_for_current_user << hiit_date.hiit
+        <div class="col">
+
+          <div class="card my-2 d-flex flex-column justify-content-between" style="height: 300px;">
+            <div class="container-except-today">
+              <div class="card-header text-center">
+                <%= "#{(Date.today - 3 + i).strftime('%m/%d')}" %>
+                <% day = (Date.today + i - 3).wday %>
+                <%= "(#{Wday.find(day).name.slice(0)})" %>
+              </div>
+              <% if @hiit_for_current_user.any? %>
+                <% 
+                  that_day_hiit_for_current_user = []
+                  @hiit_for_current_user.each do |hiit_for_current_user|
+                    if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day)
+                      HiitDate.where(hiit_id: hiit_for_current_user.id, date: day).each do |hiit_date|
+                        that_day_hiit_for_current_user << hiit_date.hiit
+                      end
                     end
                   end
-                end
-              %>
-              <% if that_day_hiit_for_current_user.length > 4 %>
-                <% 3.times do |j| %>
-                  <div class="todays-hiit-container">
-                    <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[j].id, done_dates: (Date.today - 3 + i)) %>
-                      ✅
-                    <% else %>
-                      ❌
-                    <% end %>
-                    <%= link_to that_day_hiit_for_current_user[j].name, hiit_path(that_day_hiit_for_current_user[j]),class:"btn btn-link text-secondary mb-0" %>
-                  </div>
-                <% end %>
-                <div class="todays-hiit-container">
-                    <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[3].id, done_dates: (Date.today - 3 + i)) %>
-                      ✅
-                    <% else %>
-                      ❌
-                    <% end %>
-                    <%= link_to that_day_hiit_for_current_user[3].name, hiit_path(that_day_hiit_for_current_user[3]),class:"btn btn-link text-secondary mb-0" %> ...
-                  </div>
-              <% elsif @hiit_for_current_user.any? %>
-                <% @hiit_for_current_user.each do |hiit_for_current_user| %>
-                  <% if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day) %>
-                    <div class="todays-hiit-container">
-                      <% if UserHiit.exists?(user_id: current_user.id, hiit_id: hiit_for_current_user.id, done_dates: (Date.today - 3 + i)) %>
-                        ✅
-                      <% else %>
-                        ❌
-                      <% end %>
-                      <%= link_to hiit_for_current_user.name, hiit_path(hiit_for_current_user),class:"btn btn-link text-secondary mb-0" %>
+                %>
+                <% if that_day_hiit_for_current_user.length > 4 %>
+                  <% 3.times do |j| %>
+                    <div class="todays-hiit-container d-flex justify-content-between align-items-center px-2">
+                      <div>
+                        <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[j].id, done_dates: (Date.today - 3 + i)) %>
+                          <i class="fas fa-check fa-fw text-success"></i>
+                        <% else %>
+                          <i class="fas fa-times fa-fw text-danger"></i>
+                        <% end %>
+                      </div>
+                      <div class="text-truncate w-100 text-start"><%= link_to that_day_hiit_for_current_user[j].name, hiit_path(that_day_hiit_for_current_user[j]),class:"btn btn-link text-secondary mb-0" %></div>
                     </div>
+                  <% end %>
+                    <div class="todays-hiit-container d-flex justify-content-between align-items-center px-2">
+                      <div>
+                        <% if UserHiit.exists?(user_id: current_user.id, hiit_id: that_day_hiit_for_current_user[3].id, done_dates: (Date.today - 3 + i)) %>
+                          <i class="fas fa-check fa-fw text-success"></i>
+                        <% else %>
+                          <i class="fas fa-times fa-fw text-danger"></i>
+                        <% end %>
+                      </div>
+                      <div class="text-truncate w-100 text-start"><%= link_to that_day_hiit_for_current_user[3].name, hiit_path(that_day_hiit_for_current_user[3]),class:"btn btn-link text-secondary mb-0" %></div>
+                    </div>
+                    <div class="mx-auto text-truncate" style="writing-mode: vertical-rl;">・・・</div>
+                <% elsif @hiit_for_current_user.any? %>
+                  <% @hiit_for_current_user.each do |hiit_for_current_user| %>
+                    <% if HiitDate.exists?(hiit_id: hiit_for_current_user.id, date: day) %>
+                      <div class="todays-hiit-container d-flex justify-content-between align-items-center px-2">
+                        <div>
+                          <% if UserHiit.exists?(user_id: current_user.id, hiit_id: hiit_for_current_user.id, done_dates: (Date.today - 3 + i)) %>
+                            <i class="fas fa-check fa-fw text-success"></i>
+                          <% else %>
+                            <i class="fas fa-times fa-fw text-danger"></i>
+                          <% end %>
+                        </div>
+                        <div class="text-truncate text-start w-100"><%= link_to hiit_for_current_user.name, hiit_path(hiit_for_current_user),class:"btn btn-link text-secondary mb-0" %></div>
+                      </div>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
+            </div>
+            <% if i == 3 %>
+              <div class="link-to-today">
+                <%= link_to "今日の予定を見る", user_user_hiits_path(current_user),class:"btn btn-link text-secondary mb-0 px-1" %>
+              </div>
+
             <% end %>
           </div>
-          <% if i == 3 %>
-            <div class="link-to-today">
-              <%= link_to "今日の予定を見る", user_user_hiits_path(current_user),class:"btn btn-link text-secondary mb-0 px-1" %>
-            </div>
-
-          <% end %>
         </div>
       <% end %>
     </div>
