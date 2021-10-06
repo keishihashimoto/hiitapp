@@ -20,17 +20,17 @@
     <% @today_hiit_for_user.each do |hiit| %>
       <div class="card shadow-sm container mb-3">
         <div class="card-header row row-cols-1 row-cols-sm-2">
-          <div class="col text-center">
+          <div class="col text-center d-flex justify-content-between align-items-center">
             <% if UserHiit.exists?(hiit_id: hiit.id, user_id: @user.id, done_dates: Date.today) %>
-              <span class="badge bg-dark">実施済み!!</span>
+              <span class="badge bg-dark completed">実施済み!!</span>
             <% else %>
-              <span class="badge bg-dark">未実施</span>
+              <span class="badge bg-dark completed">未実施</span>
             <% end %>
             <%= link_to hiit.name, hiit_path(hiit), class:"btn text-secondary mb-0 fs-3 hiit_name", id:"hiit_name_#{hiit.id}" %>
           </div>
           <div class="col d-flex justify-content-around align-items-center">
             <% if user_signed_in? && @user.id == current_user.id %>
-              <%= link_to "更新する", hiit_user_hiits_path(hiit), method: :post, class:"btn text-secondary mb-0 p-0" %>
+              <%= link_to "更新する", hiit_user_hiits_path(hiit), method: :post, class:"btn text-secondary mb-0 p-0 hiit-complete", id:"#{hiit.id}" %>
               <button class="timer btn btn-outline-secondary mb-0" id="timer_<%= hiit.id %>">時間を測る</button>
             <% end %>
           </div>

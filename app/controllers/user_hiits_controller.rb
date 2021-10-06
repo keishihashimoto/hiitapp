@@ -18,7 +18,6 @@ class UserHiitsController < ApplicationController
     else
       UserHiit.create(user_id: current_user.id, hiit_id: params[:hiit_id], done_dates: Date.today)
     end
-    redirect_to user_user_hiits_path(current_user)
   end
 
 end
